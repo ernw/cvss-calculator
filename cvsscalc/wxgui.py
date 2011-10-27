@@ -177,9 +177,9 @@ class MainFrame(wx.Frame):
         if target == 0: # Word
             string = '%s\n' % header
             string += '%s\t\t\t%s\n' % table_data[0]
-            string += '%s\t\t\t%s\n' % table_data[1]
-            string += '%s\t\t%s\n' % table_data[2]
-            string += '%s\t\t%s\n' % table_data[3]
+            string += '%s\t\t\t(%s)\n' % table_data[1]
+            string += '%s\t\t(%s)\n' % table_data[2]
+            string += '%s\t\t(%s)\n' % table_data[3]
             string += '%s\t\t%s\n' % table_data[4]
             string += '%s\t\t\t%s\n' % table_data[5]
             
@@ -188,9 +188,9 @@ class MainFrame(wx.Frame):
             rtf_string = r'{\rtf1\ansi\uc1\deff0{\fonttbl{\f0\fnil Verdana;}'
             rtf_string += '%s \\par\n' % header
             rtf_string += '%s \\tab\\tab\\tab %s\\par\n' % table_data[0]
-            rtf_string += '%s \\tab\\tab\\tab %s\\par\n' % table_data[1]
-            rtf_string += '%s \\tab\\tab %s\\par\n' % table_data[2]
-            rtf_string += '%s \\tab\\tab %s\\par\n' % table_data[3]
+            rtf_string += '%s \\tab\\tab\\tab (%s)\\par\n' % table_data[1]
+            rtf_string += '%s \\tab\\tab (%s)\\par\n' % table_data[2]
+            rtf_string += '%s \\tab\\tab (%s)\\par\n' % table_data[3]
             rtf_string += '%s \\tab\\tab %s\\par\n' % table_data[4]
             rtf_string += '%s \\tab\\tab\\tab\\highlight%d %s\\par\n' % (table_data[5][0], word_color, table_data[5][1])
             rtf_string += '}'
@@ -229,15 +229,17 @@ class MainFrame(wx.Frame):
             for data in table_data:
                 if table_data.index(data) == 5:
                     string += '  %s & \\colorbox{%s}{%s}\n' % (data[0], tex_color, data[1])
+                elif table_data.index(data) in (1, 2, 3):
+                    string += '  %s & (%s)\n' % data
                 else:
                     string += '  %s & %s\n' % data
             string += '\\end{tabular}\n'
         elif target == 2: # Text
             string = '%s\n' % header
             string += '%s       %s\n' % table_data[0]
-            string += '%s          %s\n' % table_data[1]
-            string += '%s      %s\n' % table_data[2]
-            string += '%s %s\n' % table_data[3]
+            string += '%s          (%s)\n' % table_data[1]
+            string += '%s      (%s)\n' % table_data[2]
+            string += '%s (%s)\n' % table_data[3]
             string += '%s %s\n' % table_data[4]
             string += '%s             %s\n' % table_data[5]
         
