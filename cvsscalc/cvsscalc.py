@@ -1,8 +1,15 @@
 #!/usr/bin/env python2
 
 import inspect
+import sys
 
 def get_user_attributes(cls):
+    """
+    
+    Keyword arguments:
+    cls -- 
+    
+    """
     boring = dir(type('dummy', (object,), {}))
     return [item
             for item in inspect.getmembers(cls, lambda x: not inspect.ismethod(x))
@@ -10,9 +17,21 @@ def get_user_attributes(cls):
 
 class Score:
     def __init__(self, string=None):
+        """Constructor
+        
+        Keyword arguments:
+        string -- (Default: None)
+        
+        """
         self.from_string(string)
                     
     def from_string(self, string):
+        """
+        
+        Keyword arguments:
+        string -- 
+        
+        """
         cls_vars = get_user_attributes(self.__class__)
         if not string:
             for var, val in cls_vars:
@@ -27,6 +46,11 @@ class Score:
 
                     
     def __str__(self):
+        """
+        
+        Keyword arguments:
+        
+        """
         cls_vars = get_user_attributes(self.__class__)
         
         tmp = []
@@ -61,6 +85,11 @@ class Base(Score):
         }
         
     def get_score(self):
+        """
+        
+        Keyword arguments:
+        
+        """
         impact = 10.41 * (1 - 
                 (1 - Base.C[self.C]) * 
                 (1 - Base.I[self.I]) * 
@@ -71,6 +100,15 @@ class Base(Score):
         f_impact = impact and 1.176
         
         return round(((0.6 * impact) + (0.4 * exploit) - 1.5) * f_impact, 1) 
+    
+    def __str__(self):
+        """
+        
+        Keyword arguments:
+        
+        """
+        return 'AV:%s / AC:%s / Au:%s / C:%s / I:%s / A:%s' % (self.AV,
+                self.AC, self.Au, self.C, self.I, self.A)
                     
 class Temporal(Score):
     E = {
@@ -95,6 +133,12 @@ class Temporal(Score):
         }
         
     def get_score(self, base):
+        """
+        
+        Keyword arguments:
+        base -- 
+        
+        """
         if isinstance(base, Base):
             base = base.get_score()
         
@@ -103,6 +147,14 @@ class Temporal(Score):
                 Temporal.RL[self.RL] * 
                 Temporal.RC[self.RC])
         
+    def __str__(self):
+        """
+        
+        Keyword arguments:
+        
+        """
+        return 'E:%s / RL:%s / RC:%s' % (self.E,
+                self.RL, self.RC)
         
 class Environmental(Score):
     CDP = {
@@ -128,6 +180,13 @@ class Environmental(Score):
         }
     
     def get_score(self, base, temp):
+        """
+        
+        Keyword arguments:
+        base -- 
+        temp -- 
+        
+        """
         adj_impact = min(10,
             10.41 * (1 - 
                 (1 - Base.C[base.C] * Environmental.CR[self.CR]) * 
@@ -145,19 +204,44 @@ class Environmental(Score):
         return round((tmp_score + (10 - tmp_score) * 
             Environmental.CDP[self.CDP]) * Environmental.TD[self.TD])
                 
+    def __str__(self):
+        """
+        
+        Keyword arguments:
+        
+        """
+        return 'CDP:%s / TD:%s / CR:%s / IR:%s / AR:%s' % (self.CDP,
+                self.TD, self.CR, self.IR, self.AR)
 class Cvss2:
     
             
     def __init__(self):
+        """Constructor
+        
+        Keyword arguments:
+        
+        """
         self.base = Base()
         self.tmp = Temporal()
         self.env = Environmental()
     
     def get_score(self):
+        """
+        
+        Keyword arguments:
+        
+        """
         return self.env.get_score(self.base, self.tmp)
 
 
-def main(fp):
+def main(fp, out=sys.stdout):
+    """
+    
+    Keyword arguments:
+    fp -- 
+    out -- (Default: sys.stdout)
+    
+    """
     import os.path
     lines = fp.readlines()
     fp.close()
@@ -168,21 +252,20 @@ def main(fp):
     cvss.env = Environmental(lines[5])
     
     score = cvss.get_score()
-    print os.path.basename(fp.name)
-    print cvss.base
-    print cvss.tmp
-    print cvss.env
-    #print "".join(lines[3:6]),
-    print score
+    out.writelines(lines[:3])
+    out.write(str(cvss.base) + "\n")
+    out.write(str(cvss.tmp) + "\n")
+    out.write(str(cvss.env) + "\n")
+    out.writelines(lines[6:9])
+    out.write(str(score) + "\n")
     if score < 4.0:
-        print 'Low'
+        out.write('Low\n')
     elif score >= 7:
-        print 'High'
+        out.write('High\n')
     else:
-        print 'Medium'
+        out.write('Medium\n')
 
 if __name__ == '__main__':
-    import sys
     fp = open(sys.argv[1])
 
     main(fp)
