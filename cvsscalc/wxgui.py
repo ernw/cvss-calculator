@@ -363,12 +363,12 @@ class BasePanel(wx.Panel):
         
         gs = wx.GridSizer(rows=6, cols=2, vgap=5, hgap=5)
         
-        self.av = wx.Choice(self, choices=[a[0] for a in BasePanel.av])
-        self.ac = wx.Choice(self, choices=[a[0] for a in BasePanel.ac])
-        self.au = wx.Choice(self, choices=[a[0] for a in BasePanel.au])
-        self.c = wx.Choice(self, choices=[a[0] for a in BasePanel.im])
-        self.a = wx.Choice(self, choices=[a[0] for a in BasePanel.im])
-        self.i = wx.Choice(self, choices=[a[0] for a in BasePanel.im])
+        self.av = wx.Choice(self, id=wx.ID_ANY, choices=[a[0] for a in BasePanel.av])
+        self.ac = wx.Choice(self, id=wx.ID_ANY, choices=[a[0] for a in BasePanel.ac])
+        self.au = wx.Choice(self, id=wx.ID_ANY, choices=[a[0] for a in BasePanel.au])
+        self.c = wx.Choice(self, id=wx.ID_ANY, choices=[a[0] for a in BasePanel.im])
+        self.i = wx.Choice(self, id=wx.ID_ANY, choices=[a[0] for a in BasePanel.im])
+        self.a = wx.Choice(self, id=wx.ID_ANY, choices=[a[0] for a in BasePanel.im])
         gs.AddMany([
                     (wx.StaticText(self, label='Attack Vector'), 0, 0),
                     (self.av, 0, wx.EXPAND),
@@ -524,8 +524,8 @@ class EnvPanel(wx.Panel):
         self.cdp = wx.Choice(self, choices=[a[0] for a in EnvPanel.cdp])
         self.td = wx.Choice(self, choices=[a[0] for a in EnvPanel.td])
         self.cr = wx.Choice(self, choices=[a[0] for a in EnvPanel.req])
-        self.ar = wx.Choice(self, choices=[a[0] for a in EnvPanel.req])
         self.ir = wx.Choice(self, choices=[a[0] for a in EnvPanel.req])
+        self.ar = wx.Choice(self, choices=[a[0] for a in EnvPanel.req])
         gs.AddMany([
                     (wx.StaticText(self, label='Colleteral Damage Potential'), 0, 0),
                     (self.cdp, 0, wx.EXPAND),
