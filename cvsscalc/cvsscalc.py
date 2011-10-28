@@ -202,7 +202,7 @@ class Environmental(Score):
         tmp_score = temp.get_score(adj_base)
         
         return round((tmp_score + (10 - tmp_score) * 
-            Environmental.CDP[self.CDP]) * Environmental.TD[self.TD])
+            Environmental.CDP[self.CDP]) * Environmental.TD[self.TD], 1)
                 
     def __str__(self):
         """
