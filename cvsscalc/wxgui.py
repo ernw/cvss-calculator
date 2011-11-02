@@ -89,32 +89,40 @@ class MainFrame(wx.Frame):
         
         fname = fd.GetPath()
         
+        if fname == '':
+            return
+
         with open(fname, 'r') as fp:
             self.load_from_file(fp)
         self.update_choices()
         self.refresh_score()
 
     def load_from_file(self, fp):
-            lines = fp.readlines()
-            idx = 1
-            if fp.name.endswith('.cvss'):
-                idx = 3
-            self.cvss_panel.base_panel.score.from_string(lines[idx])
-            self.cvss_panel.tmp_panel.score.from_string(lines[idx+1])
-            self.cvss_panel.env_panel.score.from_string(lines[idx+2])
-            date = wx.DateTime()
-            date.ParseFormat(format='%m/%d/%Y %H:%M:%S', date=lines[7].strip())
-            
-            self.cvss_panel.util_panel.date.SetValue(date)
-            self.cvss_panel.util_panel.time.SetValue(date)
-            self.cvss_panel.util_panel.name.SetValue(lines[8].strip())
-            self.fname = os.path.basename(fp.name)
+        lines = fp.readlines()
+        idx = 1
+        if fp.name.endswith('.cvss'):
+            idx = 3
+        self.cvss_panel.base_panel.score.from_string(lines[idx])
+        self.cvss_panel.tmp_panel.score.from_string(lines[idx+1])
+        self.cvss_panel.env_panel.score.from_string(lines[idx+2])
+        date = wx.DateTime()
+        date.ParseFormat(format='%m/%d/%Y %H:%M:%S', date=lines[7].strip())
+       
+        self.cvss_panel.util_panel.date.SetValue(date)
+        self.cvss_panel.util_panel.time.SetValue(date)
+        self.cvss_panel.util_panel.name.SetValue(lines[8].strip())
+        self.fname = os.path.basename(fp.name)
+
+        self.SetTitle('CVSS Calculator [%s]' % fp.name)
             
     
     def OnSave(self, event):
         fd = wx.FileDialog(self, wildcard='*.cvss', style=wx.FD_SAVE|wx.FD_OVERWRITE_PROMPT)
         fd.ShowModal()
         fname = fd.GetPath()
+
+        if fname == '':
+            return
         
         name = self.cvss_panel.util_panel.name.GetValue()
         date = self.cvss_panel.util_panel.date.GetValue()
