@@ -151,6 +151,7 @@ class MainFrame(wx.Frame):
             else:
                 fp.write('Medium\n')
             self.fname = fd.GetFilename()
+            self.SetTitle('CVSS Calculator [%s]' % fp.name)
                 
                 
     
