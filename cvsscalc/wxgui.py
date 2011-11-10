@@ -79,11 +79,11 @@ class MainFrame(wx.Frame):
         self.cvss_panel.util_panel.save_btn.Bind(wx.EVT_BUTTON, self.OnSave)
         self.cvss_panel.util_panel.copy_btn.Bind(wx.EVT_BUTTON, self.OnCopy)
     
-    def OnChoice(self, evnt):
+    def OnChoice(self, event=None):
         self.update_scores()
         self.refresh_score()
         
-    def OnLoad(self, event):
+    def OnLoad(self, event=None):
         fd = wx.FileDialog(self, wildcard='*.cvss', style=wx.FD_OPEN|wx.FD_FILE_MUST_EXIST)
         fd.ShowModal()
         
@@ -116,7 +116,7 @@ class MainFrame(wx.Frame):
         self.SetTitle('CVSS Calculator [%s]' % fp.name)
             
     
-    def OnSave(self, event):
+    def OnSave(self, event=None):
         fd = wx.FileDialog(self, wildcard='*.cvss', style=wx.FD_SAVE|wx.FD_OVERWRITE_PROMPT)
         fd.ShowModal()
         fname = fd.GetPath()
@@ -155,7 +155,7 @@ class MainFrame(wx.Frame):
                 
                 
     
-    def OnCopy(self, event):
+    def OnCopy(self, event=None):
         target = self.cvss_panel.util_panel.copy_cb.GetSelection()
         
         header = 'The severity rating based on CVSS Version 2:'
@@ -192,44 +192,14 @@ class MainFrame(wx.Frame):
             string += '%s\t\t%s\n' % table_data[4]
             string += '%s\t\t\t%s\n' % table_data[5]
             
-            compositeDataObject = wx.DataObjectComposite()
             
-            rtf_string = r'{\rtf1\ansi\uc1\deff0{\fonttbl{\f0\fnil Verdana;}'
-            rtf_string += '%s \\par\n' % header
-            rtf_string += '%s \\tab\\tab\\tab %s\\par\n' % table_data[0]
-            rtf_string += '%s \\tab\\tab\\tab (%s)\\par\n' % table_data[1]
-            rtf_string += '%s \\tab\\tab (%s)\\par\n' % table_data[2]
-            rtf_string += '%s \\tab\\tab (%s)\\par\n' % table_data[3]
-            rtf_string += '%s \\tab\\tab %s\\par\n' % table_data[4]
-            rtf_string += '%s \\tab\\tab\\tab\\highlight%d %s\\par\n' % (table_data[5][0], word_color, table_data[5][1])
-            rtf_string += '}'
-            
-            cdf = wx.CustomDataFormat('application/rtf')
-            rtf = wx.CustomDataObject(cdf)
-            rtf.SetData(rtf_string.encode('latin1'))
-            compositeDataObject.Add(rtf)
-            cdf = wx.CustomDataFormat('text/richtext')
-            rtf = wx.CustomDataObject(cdf)
-            rtf.SetData(rtf_string.encode('latin1'))
-            compositeDataObject.Add(rtf)
-            cdf = wx.CustomDataFormat('Rich Text Format')
-            rtf = wx.CustomDataObject(cdf)
-            rtf.SetData(rtf_string.encode('latin1'))
-            compositeDataObject.Add(rtf)
-            cdo = wx.CustomDataObject(wx.CustomDataFormat('COMPOUND_TEXT'))
-            cdo.SetData(string.encode('latin1'))
-            compositeDataObject.Add(cdo)
-            cdo = wx.CustomDataObject(wx.CustomDataFormat('text/plain'))
-            cdo.SetData(string.encode('latin1'))
-            compositeDataObject.Add(cdo)
             do = wx.TextDataObject()
             do.SetText(string)
-            compositeDataObject.Add(do)
             
             if not wx.TheClipboard.IsOpened():
                 wx.TheClipboard.Open()
         
-            wx.TheClipboard.SetData(compositeDataObject)
+            wx.TheClipboard.SetData(do)
             wx.TheClipboard.Close()
             return
         elif target == 1: # LaTeX
@@ -628,15 +598,38 @@ class ScorePanel(wx.Panel):
                        ])
         
         self.SetSizer(sizer)
+        
+        
+class MyApp(wx.App):
+    
+    def __init__(self, *args, **kwargs):
+        super(MyApp, self).__init__(*args, **kwargs)
+        
+    def bind_keys(self):
+        self.Bind(wx.EVT_KEY_DOWN, self.OnKey)
+    
+    def OnKey(self, event):
+        if event.ControlDown():
+            if event.GetKeyCode() == ord('c') or event.GetKeyCode() == ord('C'):
+                self.TopWindow.OnCopy()
+                event.Skip()
+            elif event.GetKeyCode() == ord('s') or event.GetKeyCode() == ord('S'):
+                self.TopWindow.OnSave()
+                event.Skip()
+            elif event.GetKeyCode() == ord('o') or event.GetKeyCode() == ord('O'):
+                self.TopWindow.OnLoad()
+                event.Skip()
+        return -1
 
 def main(infile=None):
-    app = wx.App()
+    app = MyApp()
     frame = MainFrame(None, wx.ID_ANY, title='CVSS Calculator')
     app.TopWindow = frame
     if infile:
         frame.load_from_file(infile)
         frame.update_choices()
         frame.refresh_score()
+    app.bind_keys()
     frame.Show()
     app.MainLoop()
     
