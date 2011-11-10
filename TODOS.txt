@@ -1,4 +1,5 @@
 
+- multilang fuer tabelle
 - Tooltips
 - Laden von Strings (wie bei michael)
 - Projektmanagement
