@@ -1,0 +1,7 @@
+
+- Tooltips
+- Laden von Strings (wie bei michael)
+- strg+ shortcuts
+-- strg+v ?
+- Projektmanagement
+- cwd zuletzt gespeicherter ordner
