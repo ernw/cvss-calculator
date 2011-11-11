@@ -104,6 +104,7 @@ class MainFrame(wx.Frame):
     def OnChoice(self, event=None):
         self.update_scores()
         self.refresh_score()
+        self.SetTitle(self.GetTitle()[:-1] + '*]')
         
     def OnLoad(self, event=None):
         fd = wx.FileDialog(self, wildcard='*.cvss', style=wx.FD_OPEN|wx.FD_FILE_MUST_EXIST)
