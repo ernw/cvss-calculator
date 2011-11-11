@@ -1,10 +1,10 @@
 The access conditions are somewhat specialized; the following are examples:
-• The attacking party is limited to a group of systems or users at some level of
+- The attacking party is limited to a group of systems or users at some level of
 authorization, possibly untrusted.
-• Some information must be gathered before a successful attack can be launched.
-• The affected configuration is non-default, and is not commonly configured (e.g., a
+- Some information must be gathered before a successful attack can be launched.
+- The affected configuration is non-default, and is not commonly configured (e.g., a
 vulnerability present when a server performs user account authentication via a
 specific scheme, but not present for another authentication scheme).
-• The attack requires a small amount of social engineering that might occasionally fool
+- The attack requires a small amount of social engineering that might occasionally fool
 cautious users (e.g., phishing attacks that modify a web browser’s status bar to show
 a false link, having to be on someone’s "buddy" list before sending an IM exploit).

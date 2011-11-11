@@ -1,8 +1,8 @@
 Specialized access conditions or extenuating circumstances do not exist. The following are
 examples:
-• The affected product typically requires access to a wide range of systems and users,
+- The affected product typically requires access to a wide range of systems and users,
 possibly anonymous and untrusted (e.g., Internet-facing web or mail server).
-• The affected configuration is default or ubiquitous.
-• The attack can be performed manually and requires little skill or additional
+- The affected configuration is default or ubiquitous.
+- The attack can be performed manually and requires little skill or additional
 information gathering.
-• The "race condition" is a lazy one (i.e., it is technically a race but easily winnable).
+- The "race condition" is a lazy one (i.e., it is technically a race but easily winnable).
