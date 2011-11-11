@@ -106,17 +106,22 @@ class MainFrame(wx.Frame):
     def OnClose(self, event=None):
         if self.modified:
             ret = wx.MessageBox('File was not save!\nSave it now?',
-                    'Not saved', wx.YES_NO| wx.ICON_EXCLAMATION)
+                    'Not saved', wx.YES_NO | wx.CANCEL | wx.ICON_EXCLAMATION)
 
             if ret == wx.YES:
                 self.OnSave(save_old=True)
+            elif ret == wx.CANCEL:
+                return
         self.Destroy()
     
     def OnChoice(self, event=None):
         self.update_scores()
         self.refresh_score()
         self.modified = True
-        self.SetTitle(self.GetTitle()[:-1] + '*]')
+        if self.GetTitle().endswith(']'):
+            self.SetTitle(self.GetTitle()[:-1] + '*]')
+        else:
+            self.SetTitle(self.GetTitle() + '[<never saved before>*]')
         
     def OnLoad(self, event=None):
         fd = wx.FileDialog(self, wildcard='*.cvss', style=wx.FD_OPEN|wx.FD_FILE_MUST_EXIST)
