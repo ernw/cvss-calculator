@@ -6,6 +6,7 @@ Created on Oct 21, 2011
 from __future__ import absolute_import
 
 from datetime import datetime
+import os
 import os.path
 import sys
 import zipfile
@@ -133,17 +134,24 @@ class MainFrame(wx.Frame):
         self.cvss_panel.util_panel.time.SetValue(date)
         self.cvss_panel.util_panel.name.SetValue(lines[8].strip())
         self.fname = os.path.basename(fp.name)
+        os.chdir(os.path.dirname(fp.name))
 
         self.SetTitle('CVSS Calculator [%s]' % fp.name)
             
     
-    def OnSave(self, event=None):
-        fd = wx.FileDialog(self, wildcard='*.cvss', style=wx.FD_SAVE|wx.FD_OVERWRITE_PROMPT)
-        fd.ShowModal()
-        fname = fd.GetPath()
+    def OnSave(self, event=None, safe_old=False):
+        if not safe_old or not self.fname:
+            fd = wx.FileDialog(self, wildcard='*.cvss', style=wx.FD_SAVE|wx.FD_OVERWRITE_PROMPT)
+            fd.ShowModal()
+            fname = fd.GetPath()
+        else:
+            fname = os.path.join(os.getcwd(), self.fname)
 
         if fname == '':
             return
+
+        if not fname.endswith('.cvss'):
+            fname += '.cvss'
         
         name = self.cvss_panel.util_panel.name.GetValue()
         date = self.cvss_panel.util_panel.date.GetValue()
@@ -171,7 +179,8 @@ class MainFrame(wx.Frame):
                 fp.write('High\n')
             else:
                 fp.write('Medium\n')
-            self.fname = fd.GetFilename()
+            self.fname = os.path.basename(fname)
+            os.chdir(os.path.dirname(fname))
             self.SetTitle('CVSS Calculator [%s]' % fp.name)
                 
                 
@@ -686,14 +695,15 @@ class MyApp(wx.App):
         if event.ControlDown():
             if event.GetKeyCode() == ord('c') or event.GetKeyCode() == ord('C'):
                 self.TopWindow.OnCopy()
-                event.Skip()
             elif event.GetKeyCode() == ord('s') or event.GetKeyCode() == ord('S'):
-                self.TopWindow.OnSave()
-                event.Skip()
+                self.TopWindow.OnSave(safe_old=(not event.ShiftDown()))
             elif event.GetKeyCode() == ord('o') or event.GetKeyCode() == ord('O'):
                 self.TopWindow.OnLoad()
+            else:
                 event.Skip()
-        return -1
+        else:
+            event.Skip()
+#        return -1
 
 def main(infile=None):
     app = MyApp()
