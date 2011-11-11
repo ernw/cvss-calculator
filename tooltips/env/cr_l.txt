@@ -1,0 +1,3 @@
+Loss of [confidentiality | integrity | availability] is likely to have only a limited
+adverse effect on the organization or individuals associated with the organization
+(e.g., employees, customers).

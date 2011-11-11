@@ -1,0 +1,2 @@
+A successful exploit of this vulnerability may result in significant physical or property
+damage or loss. Or, there may be a significant loss of revenue or productivity.

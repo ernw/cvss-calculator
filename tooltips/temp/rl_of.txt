@@ -1,0 +1,2 @@
+A complete vendor solution is available. Either the vendor has issued an official patch,
+or an upgrade is available.

@@ -1,0 +1,4 @@
+Exploiting the vulnerability requires that the attacker authenticate two or more times, even if
+the same credentials are used each time. An example is an attacker authenticating to an
+operating system in addition to providing credentials to access an application hosted on that
+system.

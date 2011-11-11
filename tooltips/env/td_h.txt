@@ -1,0 +1,2 @@
+Targets exist inside the environment on a considerable scale. Between 76% - 100% of
+the total environment is considered at risk.

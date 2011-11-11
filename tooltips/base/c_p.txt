@@ -1,0 +1,4 @@
+There is considerable informational disclosure. Access to some system files is
+possible, but the attacker does not have control over what is obtained, or the scope of
+the loss is constrained. An example is a vulnerability that divulges only certain tables
+in a database.

@@ -1,0 +1,3 @@
+A successful exploit of this vulnerability may result in moderate physical or property
+damage. Or, there may be a moderate loss of revenue or productivity to the
+organization.

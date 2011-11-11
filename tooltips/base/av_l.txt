@@ -1,0 +1,4 @@
+A vulnerability exploitable with only local access requires the attacker to have either
+physical access to the vulnerable system or a local (shell) account. Examples of locally
+exploitable vulnerabilities are peripheral attacks such as Firewire/USB DMA attacks, and
+local privilege escalations (e.g., sudo).
