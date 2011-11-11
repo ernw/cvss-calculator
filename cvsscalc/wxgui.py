@@ -336,6 +336,7 @@ class UtilPanel(wx.Panel):
             self.name = wx.TextCtrl(self)
             self.date = wx.DatePickerCtrl(self)
             self.time = TimeCtrl(self)
+            self.time.SetValue(wx.DateTime().Now())
             self.load_btn = wx.Button(self, label='Load')
             self.save_btn = wx.Button(self, label='Save')
             self.copy_btn = wx.Button(self, label='Copy')
