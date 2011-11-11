@@ -1,4 +1,4 @@
-pecialized access conditions exist. For example:
+Specialized access conditions exist. For example:
 - In most configurations, the attacking party must already have elevated privileges or
 spoof additional systems in addition to the attacking system (e.g., DNS hijacking).
 - The attack depends on social engineering methods that would be easily detected by
