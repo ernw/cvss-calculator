@@ -7,6 +7,8 @@ from __future__ import absolute_import
 
 from datetime import datetime
 import os.path
+import sys
+import zipfile
 import functools
 import wx
 from cvsscalc import cvsscalc
@@ -53,6 +55,24 @@ except ImportError:
         def add_color_key(self, pos, color):
             pass
 
+def find_file(path):
+    """Find the file named path in the sys.path.
+    Returns the full path name if found, None if not found"""
+    for dirname in sys.path:
+        if os.path.isfile(dirname):
+            zf = zipfile.ZipFile(dirname)
+            if path in zf.namelist():
+                data = zf.read(path)
+                zf.close()
+                return data
+
+            continue
+
+        possible = os.path.join(dirname, path)
+        if os.path.isfile(possible):
+            with open(possible, 'r') as fp:
+                return fp.read()
+    return None
 
 class MainFrame(wx.Frame):
     
@@ -315,10 +335,10 @@ class ScoreSelectPanel(wx.Panel):
         for title, key in data:
             key = key.lower()
 
-            with open('tooltips/%s/%s_%s.txt' % (panel, name, key)) as fp:
-                txt += "%s:\n" % title
-                txt += fp.read()
-                txt += "\n"
+            content = find_file('tooltips/%s/%s_%s.txt' % (panel, name, key))
+            txt += "%s:\n" % title
+            txt += content
+            txt += "\n"
         
         txt = txt.strip()
         choice.SetToolTipString(txt)
