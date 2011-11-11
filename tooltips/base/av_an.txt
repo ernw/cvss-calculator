@@ -1,0 +1,4 @@
+A vulnerability exploitable with adjacent network access requires the attacker to have
+access to either the broadcast or collision domain of the vulnerable software. Examples of
+local networks include local IP subnet, Bluetooth, IEEE 802.11, and local Ethernet
+segment.

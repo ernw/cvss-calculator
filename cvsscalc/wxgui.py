@@ -7,6 +7,9 @@ from __future__ import absolute_import
 
 from datetime import datetime
 import os.path
+import sys
+import zipfile
+import functools
 import wx
 from cvsscalc import cvsscalc
 
@@ -52,6 +55,24 @@ except ImportError:
         def add_color_key(self, pos, color):
             pass
 
+def find_file(path):
+    """Find the file named path in the sys.path.
+    Returns the full path name if found, None if not found"""
+    for dirname in sys.path:
+        if os.path.isfile(dirname):
+            zf = zipfile.ZipFile(dirname)
+            if path in zf.namelist():
+                data = zf.read(path)
+                zf.close()
+                return data
+
+            continue
+
+        possible = os.path.join(dirname, path)
+        if os.path.isfile(possible):
+            with open(possible, 'r') as fp:
+                return fp.read()
+    return None
 
 class MainFrame(wx.Frame):
     
@@ -307,9 +328,28 @@ class UtilPanel(wx.Panel):
                         ])
             
             self.SetSizer(gs)
+
+class ScoreSelectPanel(wx.Panel):
+    def add_tooltip(self, choice, btn, panel, name, data):
+        txt = ''
+        for title, key in data:
+            key = key.lower()
+
+            content = find_file('tooltips/%s/%s_%s.txt' % (panel, name, key))
+            txt += "%s:\n" % title
+            txt += content
+            txt += "\n"
+        
+        txt = txt.strip()
+        choice.SetToolTipString(txt)
+
+        def onclick(txt, event):
+            wx.MessageBox(txt)
+
+        btn.Bind(wx.EVT_BUTTON, functools.partial(onclick, txt))
             
      
-class BasePanel(wx.Panel):
+class BasePanel(ScoreSelectPanel):
     av = [
           ('Local', 'L'),
           ('Adjacent Network', 'AN'),
@@ -340,7 +380,7 @@ class BasePanel(wx.Panel):
         box = wx.StaticBox(self, -1, 'Base Score')
         sizer = wx.StaticBoxSizer(box, wx.HORIZONTAL)
         
-        gs = wx.GridSizer(rows=6, cols=2, vgap=5, hgap=5)
+        gs = wx.GridSizer(rows=6, cols=3, vgap=5, hgap=5)
         
         self.av = wx.Choice(self, id=wx.ID_ANY, choices=[a[0] for a in BasePanel.av])
         self.ac = wx.Choice(self, id=wx.ID_ANY, choices=[a[0] for a in BasePanel.ac])
@@ -348,20 +388,34 @@ class BasePanel(wx.Panel):
         self.c = wx.Choice(self, id=wx.ID_ANY, choices=[a[0] for a in BasePanel.im])
         self.i = wx.Choice(self, id=wx.ID_ANY, choices=[a[0] for a in BasePanel.im])
         self.a = wx.Choice(self, id=wx.ID_ANY, choices=[a[0] for a in BasePanel.im])
+        pic = wx.ArtProvider.GetBitmap(wx.ART_QUESTION)
+        av_btn = wx.BitmapButton(self, -1, pic)
+        ac_btn = wx.BitmapButton(self, -1, pic)
+        au_btn = wx.BitmapButton(self, -1, pic)
+        c_btn = wx.BitmapButton(self, -1, pic)
+        i_btn = wx.BitmapButton(self, -1, pic)
+        a_btn = wx.BitmapButton(self, -1, pic)
         gs.AddMany([
                     (wx.StaticText(self, label='Attack Vector'), 0, 0),
-                    (self.av, 0, wx.EXPAND),
+                    (self.av, 0, wx.EXPAND), (av_btn, 0,0),
                     (wx.StaticText(self, label='Attack Complexity'), 0, 0),
-                    (self.ac, 0, wx.EXPAND),
+                    (self.ac, 0, wx.EXPAND), (ac_btn, 0,0),
                     (wx.StaticText(self, label='Authentication'), 0, 0),
-                    (self.au, 0, wx.EXPAND),
+                    (self.au, 0, wx.EXPAND), (au_btn, 0,0),
                     (wx.StaticText(self, label='Confidentiality Impact'), 0, 0),
-                    (self.c, 0, wx.EXPAND),
+                    (self.c, 0, wx.EXPAND), (c_btn, 0,0),
                     (wx.StaticText(self, label='Integrity Impact'), 0, 0),
-                    (self.i, 0, wx.EXPAND),
+                    (self.i, 0, wx.EXPAND), (i_btn, 0,0),
                     (wx.StaticText(self, label='Availability Impact'), 0, 0),
-                    (self.a, 0, wx.EXPAND),
+                    (self.a, 0, wx.EXPAND), (a_btn, 0,0),
                     ])
+
+        self.add_tooltip(self.av, av_btn, 'base', 'av', BasePanel.av)
+        self.add_tooltip(self.ac, ac_btn, 'base', 'ac', BasePanel.ac)
+        self.add_tooltip(self.au, au_btn, 'base', 'au', BasePanel.au)
+        self.add_tooltip(self.c, c_btn, 'base', 'c', BasePanel.im)
+        self.add_tooltip(self.i, i_btn, 'base', 'i', BasePanel.im)
+        self.add_tooltip(self.a, a_btn, 'base', 'a', BasePanel.im)
 
         sizer.Add(gs, wx.EXPAND)
         self.SetSizer(sizer)
@@ -399,7 +453,7 @@ class BasePanel(wx.Panel):
         self.i.Bind(wx.EVT_CHOICE, handler)
         
         
-class TempPanel(wx.Panel):
+class TempPanel(ScoreSelectPanel):
     e = [
          ('Unproven', 'U'),
          ('Proof of Concept', 'POC'),
@@ -428,19 +482,27 @@ class TempPanel(wx.Panel):
         box = wx.StaticBox(self, -1, 'Temporal Score')
         sizer = wx.StaticBoxSizer(box, wx.HORIZONTAL)
         
-        gs = wx.GridSizer(rows=3, cols=2, vgap=5, hgap=5)
+        gs = wx.GridSizer(rows=3, cols=3, vgap=5, hgap=5)
         
         self.e = wx.Choice(self, choices=[a[0] for a in TempPanel.e])
         self.rl = wx.Choice(self, choices=[a[0] for a in TempPanel.rl])
         self.rc = wx.Choice(self, choices=[a[0] for a in TempPanel.rc])
+        pic = wx.ArtProvider.GetBitmap(wx.ART_QUESTION)
+        e_btn = wx.BitmapButton(self, -1, pic)
+        rl_btn = wx.BitmapButton(self, -1, pic)
+        rc_btn = wx.BitmapButton(self, -1, pic)
         gs.AddMany([
                     (wx.StaticText(self, label='Exploitability'), 0, 0),
-                    (self.e, 0, wx.EXPAND),
+                    (self.e, 0, wx.EXPAND), (e_btn, 0,0),
                     (wx.StaticText(self, label='Remedation Level'), 0, 0),
-                    (self.rl, 0, wx.EXPAND),
+                    (self.rl, 0, wx.EXPAND), (rl_btn, 0,0),
                     (wx.StaticText(self, label='Report Confidence'), 0, 0),
-                    (self.rc, 0, wx.EXPAND),
+                    (self.rc, 0, wx.EXPAND), (rc_btn, 0,0),
                     ])
+        
+        self.add_tooltip(self.e, e_btn, 'temp', 'e', TempPanel.e)
+        self.add_tooltip(self.rl, rl_btn, 'temp', 'rl', TempPanel.rl)
+        self.add_tooltip(self.rc, rc_btn, 'temp', 'rc', TempPanel.rc)
         
         sizer.Add(gs, wx.EXPAND|wx.ALL)
         self.SetSizer(sizer)
@@ -468,7 +530,7 @@ class TempPanel(wx.Panel):
         self.rl.Bind(wx.EVT_CHOICE, handler)
         self.rc.Bind(wx.EVT_CHOICE, handler)
 
-class EnvPanel(wx.Panel):
+class EnvPanel(ScoreSelectPanel):
     cdp = [
            ('None', 'N'),
            ('Low', 'L'),
@@ -498,25 +560,37 @@ class EnvPanel(wx.Panel):
         box = wx.StaticBox(self, -1, 'Environmental Score')
         sizer = wx.StaticBoxSizer(box, wx.HORIZONTAL)
         
-        gs = wx.GridSizer(rows=6, cols=2, vgap=5, hgap=5)
+        gs = wx.GridSizer(rows=6, cols=3, vgap=5, hgap=5)
         
         self.cdp = wx.Choice(self, choices=[a[0] for a in EnvPanel.cdp])
         self.td = wx.Choice(self, choices=[a[0] for a in EnvPanel.td])
         self.cr = wx.Choice(self, choices=[a[0] for a in EnvPanel.req])
         self.ir = wx.Choice(self, choices=[a[0] for a in EnvPanel.req])
         self.ar = wx.Choice(self, choices=[a[0] for a in EnvPanel.req])
+        pic = wx.ArtProvider.GetBitmap(wx.ART_QUESTION)
+        cdp_btn = wx.BitmapButton(self, -1, pic)
+        td_btn = wx.BitmapButton(self, -1, pic)
+        cr_btn = wx.BitmapButton(self, -1, pic)
+        ir_btn = wx.BitmapButton(self, -1, pic)
+        ar_btn = wx.BitmapButton(self, -1, pic)
         gs.AddMany([
                     (wx.StaticText(self, label='Colleteral Damage Potential'), 0, 0),
-                    (self.cdp, 0, wx.EXPAND),
+                    (self.cdp, 0, wx.EXPAND), (cdp_btn, 0,0),
                     (wx.StaticText(self, label='Target Distribution'), 0, 0),
-                    (self.td, 0, wx.EXPAND),
+                    (self.td, 0, wx.EXPAND), (td_btn, 0,0),
                     (wx.StaticText(self, label='Confidentiality Requirement'), 0, 0),
-                    (self.cr, 0, wx.EXPAND),
+                    (self.cr, 0, wx.EXPAND), (cr_btn, 0,0),
                     (wx.StaticText(self, label='Integrity Requirement'), 0, 0),
-                    (self.ir, 0, wx.EXPAND),
+                    (self.ir, 0, wx.EXPAND), (ir_btn, 0,0),
                     (wx.StaticText(self, label='Availability Requirement'), 0, 0),
-                    (self.ar, 0, wx.EXPAND),
+                    (self.ar, 0, wx.EXPAND), (ar_btn, 0,0),
                     ])
+        
+        self.add_tooltip(self.cdp, cdp_btn, 'env', 'cdp', EnvPanel.cdp)
+        self.add_tooltip(self.td, td_btn, 'env', 'td', EnvPanel.td)
+        self.add_tooltip(self.cr, cr_btn, 'env', 'cr', EnvPanel.req)
+        self.add_tooltip(self.ir, ir_btn, 'env', 'ir', EnvPanel.req)
+        self.add_tooltip(self.ar, ar_btn, 'env', 'ar', EnvPanel.req)
         
         sizer.Add(gs, wx.EXPAND)
         self.SetSizer(sizer)

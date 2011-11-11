@@ -1,0 +1,2 @@
+No target systems exist, or targets are so highly specialized that they only exist in a
+laboratory setting. Effectively 0% of the environment is at risk.

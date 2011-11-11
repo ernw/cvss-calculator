@@ -1,0 +1,3 @@
+Proof-of-concept exploit code or an attack demonstration that is not practical for most
+systems is available. The code or technique is not functional in all situations and may
+require substantial modification by a skilled attacker.

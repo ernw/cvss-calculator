@@ -1,0 +1,2 @@
+Functional exploit code is available. The code works in most situations where the
+vulnerability exists.

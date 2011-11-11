@@ -1,0 +1,4 @@
+The vulnerability has been acknowledged by the vendor or author of the affected
+technology. The vulnerability may also be “Confirmed” when its existence is
+confirmed from an external event such as publication of functional or proof-of-
+concept exploit code or widespread exploitation.

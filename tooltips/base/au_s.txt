@@ -1,0 +1,1 @@
+One instance of authentication is required to access and exploit the vulnerability.

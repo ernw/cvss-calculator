@@ -1,0 +1,2 @@
+Targets exist inside the environment, but on a small scale. Between 1% - 25% of the
+total environment is at risk.

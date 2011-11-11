@@ -1,0 +1,3 @@
+There is reduced performance or interruptions in resource availability. An example is
+a network-based flood attack that permits a limited number of successful connections
+to an Internet service.

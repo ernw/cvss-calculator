@@ -1,0 +1,1 @@
+Authentication is not required to access and exploit the vulnerability.

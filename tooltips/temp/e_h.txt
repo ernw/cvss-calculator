@@ -1,0 +1,4 @@
+Either the vulnerability is exploitable by functional mobile autonomous code, or no
+exploit is required (manual trigger) and details are widely available. The code works
+in every situation, or is actively being delivered via a mobile autonomous agent (such
+as a worm or virus).

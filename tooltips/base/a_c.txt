@@ -1,0 +1,2 @@
+There is a total shutdown of the affected resource. The attacker can render the
+resource completely unavailable.

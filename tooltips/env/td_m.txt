@@ -1,0 +1,2 @@
+Targets exist inside the environment, but on a medium scale. Between 26% - 75% of
+the total environment is at risk.

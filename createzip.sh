@@ -1,6 +1,6 @@
 #!/bin/sh
 
-zip cvsscalc.zip __main__.py cvsscalc/*.py
+zip cvsscalc.zip __main__.py cvsscalc/*.py tooltips/*/*
 
 echo '#!/usr/bin/env python2' > cvsscalc.zippy
 cat cvsscalc.zip >> cvsscalc.zippy

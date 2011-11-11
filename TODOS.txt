@@ -1,6 +1,6 @@
 
 - multilang fuer tabelle
-- Tooltips
++ Tooltips
 - Laden von Strings (wie bei michael)
 - Projektmanagement
 - cwd zuletzt gespeicherter ordner

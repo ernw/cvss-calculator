@@ -1,0 +1,2 @@
+There is an official but temporary fix available. This includes instances where the
+vendor issues a temporary hotfix, tool, or workaround.

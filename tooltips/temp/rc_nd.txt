@@ -1,0 +1,2 @@
+Assigning this value to the metric will not influence the score. It is a signal to the
+equation to skip this metric.
