@@ -7,4 +7,4 @@ vulnerability present when a server performs user account authentication via a
 specific scheme, but not present for another authentication scheme).
 • The attack requires a small amount of social engineering that might occasionally fool
 cautious users (e.g., phishing attacks that modify a web browser’s status bar to show
-a false link, having to be on someone’s “buddy” list before sending an IM exploit).
+a false link, having to be on someone’s "buddy" list before sending an IM exploit).

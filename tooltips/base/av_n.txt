@@ -1,4 +1,4 @@
 A vulnerability exploitable with network access means the vulnerable software is bound to
 the network stack and the attacker does not require local network access or local access.
-Such a vulnerability is often termed “remotely exploitable”. An example of a network
+Such a vulnerability is often termed "remotely exploitable". An example of a network
 attack is an RPC buffer overflow.
