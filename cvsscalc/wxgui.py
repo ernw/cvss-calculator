@@ -80,6 +80,7 @@ class MainFrame(wx.Frame):
     def __init__(self, *args, **kwargs):
         super(MainFrame, self).__init__(*args, **kwargs)
         self.fname = None
+        self.modified = False
         self.score_panel = ScorePanel(self)
         nb = wx.Notebook(self)
         self.cvss_panel = CvssPanel(nb)
@@ -100,10 +101,21 @@ class MainFrame(wx.Frame):
         self.cvss_panel.util_panel.load_btn.Bind(wx.EVT_BUTTON, self.OnLoad)
         self.cvss_panel.util_panel.save_btn.Bind(wx.EVT_BUTTON, self.OnSave)
         self.cvss_panel.util_panel.copy_btn.Bind(wx.EVT_BUTTON, self.OnCopy)
+        self.Bind(wx.EVT_CLOSE, self.OnClose)
+
+    def OnClose(self, event=None):
+        if self.modified:
+            ret = wx.MessageBox('File was not save!\nSave it now?',
+                    'Not saved', wx.YES_NO| wx.ICON_EXCLAMATION)
+
+            if ret == wx.YES:
+                self.OnSave(save_old=True)
+        self.Destroy()
     
     def OnChoice(self, event=None):
         self.update_scores()
         self.refresh_score()
+        self.modified = True
         self.SetTitle(self.GetTitle()[:-1] + '*]')
         
     def OnLoad(self, event=None):
@@ -137,11 +149,12 @@ class MainFrame(wx.Frame):
         self.fname = os.path.basename(fp.name)
         os.chdir(os.path.dirname(fp.name))
 
+        self.modified = False
         self.SetTitle('CVSS Calculator [%s]' % fp.name)
             
     
-    def OnSave(self, event=None, safe_old=False):
-        if not safe_old or not self.fname:
+    def OnSave(self, event=None, save_old=False):
+        if not save_old or not self.fname:
             fd = wx.FileDialog(self, wildcard='*.cvss', style=wx.FD_SAVE|wx.FD_OVERWRITE_PROMPT)
             fd.ShowModal()
             fname = fd.GetPath()
@@ -169,7 +182,7 @@ class MainFrame(wx.Frame):
             fp.write(str(self.cvss_panel.base_panel.score) + '\r\n')
             fp.write(str(self.cvss_panel.tmp_panel.score) + '\r\n')
             fp.write(str(self.cvss_panel.env_panel.score) + '\r\n')
-            fp.write('\r\n') # Desc
+            fp.write('%s\r\n' % os.path.basename(fname).replace('_', ' ')[:-5]) # Desc
             fp.write(date.Format('%m/%d/%Y %H:%M:%S') + '\r\n')
             fp.write(name + '\r\n') # auditor
             score = self.get_total_score()
@@ -182,6 +195,7 @@ class MainFrame(wx.Frame):
                 fp.write('Medium\n')
             self.fname = os.path.basename(fname)
             os.chdir(os.path.dirname(fname))
+            self.modified = False
             self.SetTitle('CVSS Calculator [%s]' % fp.name)
                 
                 
@@ -697,7 +711,7 @@ class MyApp(wx.App):
             if event.GetKeyCode() == ord('c') or event.GetKeyCode() == ord('C'):
                 self.TopWindow.OnCopy()
             elif event.GetKeyCode() == ord('s') or event.GetKeyCode() == ord('S'):
-                self.TopWindow.OnSave(safe_old=(not event.ShiftDown()))
+                self.TopWindow.OnSave(save_old=(not event.ShiftDown()))
             elif event.GetKeyCode() == ord('o') or event.GetKeyCode() == ord('O'):
                 self.TopWindow.OnLoad()
             else:
