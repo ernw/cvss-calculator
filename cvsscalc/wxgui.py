@@ -10,6 +10,7 @@ import os.path
 import sys
 import zipfile
 import functools
+import tempfile
 import wx
 from wx import xrc
 
@@ -80,12 +81,12 @@ except ImportError:
             """
             pass
 
-def find_file(path):
+def find_file(path, mode='r'):
     """Find the file named path in the sys.path.
     Returns the full path name if found, None if not found"""
     for dirname in sys.path:
         if os.path.isfile(dirname):
-            zf = zipfile.ZipFile(dirname)
+            zf = zipfile.ZipFile(dirname, mode=mode)
             if path in zf.namelist():
                 data = zf.read(path)
                 zf.close()
@@ -95,7 +96,7 @@ def find_file(path):
 
         possible = os.path.join(dirname, path)
         if os.path.isfile(possible):
-            with open(possible, 'r') as fp:
+            with open(possible, mode) as fp:
                 return fp.read()
     return None
 
@@ -338,6 +339,15 @@ class MyApp(wx.App):
         self.update_scores()
         self.refresh_score()
         
+        
+        ib = wx.IconBundle()
+        icon_content = find_file('cvsscalc/cvsscalc.ico', mode='rb')
+        tmpfile = tempfile.NamedTemporaryFile()
+        tmpfile.write(icon_content)
+        tmpfile.flush()
+        ib.AddIconFromFile(tmpfile.name, wx.BITMAP_TYPE_ANY)
+        tmpfile.close()
+
         # resize and show
         self.frame.Fit()
         self.frame.Show()
