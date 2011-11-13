@@ -158,6 +158,8 @@ class TimeCtrlHandler(xrc.XmlResourceHandler):
                      style=self.GetStyle())
         if self.GetText('value'):
             w.SetValue(self.GetText('value'))
+        else:
+            w.SetValue(wx.DateTime.Now())
         self.SetupWindow(w)
         return w
     
