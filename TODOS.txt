@@ -1,8 +1,8 @@
 
 - multilang fuer tabelle
 + Tooltips
-- Laden von Strings (wie bei michael)
++ Laden von Strings (wie bei michael)
 - Projektmanagement
-- cwd zuletzt gespeicherter ordner
++ cwd zuletzt gespeicherter ordner
 + strg+ shortcuts
 -- strg+v ?
