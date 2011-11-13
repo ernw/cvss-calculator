@@ -22,7 +22,7 @@
 						<cols>3</cols>
 						<vgap>0</vgap>
 						<hgap>0</hgap>
-						<growablecols>0</growablecols>
+						<growablecols>0,1</growablecols>
 						<growablerows></growablerows>
 						<object class="sizeritem">
 							<option>1</option>
@@ -35,7 +35,7 @@
 						</object>
 						<object class="sizeritem">
 							<option>0</option>
-							<flag>wxALL</flag>
+							<flag>wxALL|wxEXPAND</flag>
 							<border>5</border>
 							<object class="wxGauge" name="base_gauge">
 								<style>wxGA_HORIZONTAL</style>
@@ -63,7 +63,7 @@
 						</object>
 						<object class="sizeritem">
 							<option>2</option>
-							<flag>wxALL</flag>
+							<flag>wxALL|wxEXPAND</flag>
 							<border>5</border>
 							<object class="wxGauge" name="temp_gauge">
 								<style>wxGA_HORIZONTAL</style>
@@ -91,7 +91,7 @@
 						</object>
 						<object class="sizeritem">
 							<option>2</option>
-							<flag>wxALL</flag>
+							<flag>wxALL|wxEXPAND</flag>
 							<border>5</border>
 							<object class="wxGauge" name="env_gauge">
 								<style>wxGA_HORIZONTAL</style>
@@ -119,7 +119,7 @@
 						</object>
 						<object class="sizeritem">
 							<option>0</option>
-							<flag>wxALL</flag>
+							<flag>wxALL|wxEXPAND</flag>
 							<border>5</border>
 							<object class="wxGauge" name="total_gauge">
 								<style>wxGA_HORIZONTAL</style>
@@ -146,7 +146,7 @@
 				<object class="wxNotebook" name="m_notebook1">
 					<object class="notebookpage">
 						<label>CVSS 2</label>
-						<selected>0</selected>
+						<selected>1</selected>
 						<object class="wxPanel" name="cvss2_panel">
 							<style>wxTAB_TRAVERSAL</style>
 							<object class="wxFlexGridSizer">
@@ -736,6 +736,156 @@
 												</object>
 											</object>
 										</object>
+									</object>
+								</object>
+							</object>
+						</object>
+					</object>
+					<object class="notebookpage">
+						<label>Load strings</label>
+						<selected>0</selected>
+						<object class="wxPanel" name="load_panel">
+							<style>wxTAB_TRAVERSAL</style>
+							<object class="wxFlexGridSizer">
+								<rows>4</rows>
+								<cols>3</cols>
+								<vgap>0</vgap>
+								<hgap>0</hgap>
+								<growablecols>1</growablecols>
+								<growablerows></growablerows>
+								<object class="sizeritem">
+									<option>0</option>
+									<flag>wxALL</flag>
+									<border>5</border>
+									<object class="wxStaticText" name="m_staticText27">
+										<label>Base Score</label>
+										<wrap>-1</wrap>
+									</object>
+								</object>
+								<object class="sizeritem">
+									<option>1</option>
+									<flag>wxEXPAND</flag>
+									<border>5</border>
+									<object class="wxBoxSizer">
+										<orient>wxVERTICAL</orient>
+										<object class="sizeritem">
+											<option>0</option>
+											<flag>wxALIGN_CENTER_VERTICAL|wxALL|wxEXPAND</flag>
+											<border>5</border>
+											<object class="wxTextCtrl" name="base_score_str">
+												<style>wxTE_CENTRE</style>
+												<value>- / - / - / - / - / -</value>
+												<maxlength>0</maxlength>
+											</object>
+										</object>
+									</object>
+								</object>
+								<object class="sizeritem">
+									<option>0</option>
+									<flag>wxALL</flag>
+									<border>5</border>
+									<object class="wxButton" name="load_base_score_btn">
+										<label>Load</label>
+										<default>0</default>
+									</object>
+								</object>
+								<object class="sizeritem">
+									<option>0</option>
+									<flag>wxALL</flag>
+									<border>5</border>
+									<object class="wxStaticText" name="m_staticText28">
+										<label>Temporal Score</label>
+										<wrap>-1</wrap>
+									</object>
+								</object>
+								<object class="sizeritem">
+									<option>1</option>
+									<flag>wxEXPAND</flag>
+									<border>5</border>
+									<object class="wxBoxSizer">
+										<orient>wxVERTICAL</orient>
+										<object class="sizeritem">
+											<option>0</option>
+											<flag>wxALL|wxEXPAND</flag>
+											<border>5</border>
+											<object class="wxTextCtrl" name="temp_score_str">
+												<style>wxTE_CENTRE</style>
+												<value>- / - / -</value>
+												<maxlength>0</maxlength>
+											</object>
+										</object>
+									</object>
+								</object>
+								<object class="sizeritem">
+									<option>0</option>
+									<flag>wxALL</flag>
+									<border>5</border>
+									<object class="wxButton" name="load_temp_score_btn">
+										<label>Load</label>
+										<default>0</default>
+									</object>
+								</object>
+								<object class="sizeritem">
+									<option>0</option>
+									<flag>wxALL</flag>
+									<border>5</border>
+									<object class="wxStaticText" name="m_staticText29">
+										<label>Environmental Score</label>
+										<wrap>-1</wrap>
+									</object>
+								</object>
+								<object class="sizeritem">
+									<option>1</option>
+									<flag>wxEXPAND</flag>
+									<border>5</border>
+									<object class="wxBoxSizer">
+										<orient>wxVERTICAL</orient>
+										<object class="sizeritem">
+											<option>0</option>
+											<flag>wxALL|wxEXPAND</flag>
+											<border>5</border>
+											<object class="wxTextCtrl" name="env_score_str">
+												<style>wxTE_CENTRE</style>
+												<value>- / - / - / - / -</value>
+												<maxlength>0</maxlength>
+											</object>
+										</object>
+									</object>
+								</object>
+								<object class="sizeritem">
+									<option>0</option>
+									<flag>wxALL</flag>
+									<border>5</border>
+									<object class="wxButton" name="load_env_score_btn">
+										<label>Load</label>
+										<default>0</default>
+									</object>
+								</object>
+								<object class="sizeritem">
+									<option>0</option>
+									<flag>wxALL</flag>
+									<border>5</border>
+									<object class="wxStaticText" name="m_staticText30">
+										<label></label>
+										<wrap>-1</wrap>
+									</object>
+								</object>
+								<object class="sizeritem">
+									<option>0</option>
+									<flag>wxALL</flag>
+									<border>5</border>
+									<object class="wxStaticText" name="m_staticText31">
+										<label></label>
+										<wrap>-1</wrap>
+									</object>
+								</object>
+								<object class="sizeritem">
+									<option>0</option>
+									<flag>wxALL</flag>
+									<border>5</border>
+									<object class="wxButton" name="load_all_scores_btn">
+										<label>Load all</label>
+										<default>0</default>
 									</object>
 								</object>
 							</object>

@@ -327,6 +327,7 @@ class MyApp(wx.App):
         self.temp_panel = xrc.XRCCTRL(self.frame, 'temp_panel')
         self.util_panel = xrc.XRCCTRL(self.frame, 'util_panel')
         self.score_panel = xrc.XRCCTRL(self.frame, 'score_panel')
+        self.load_panel = xrc.XRCCTRL(self.frame, 'load_panel')
         
         # setup panels
         self.setup_panel(self.base_panel)
@@ -479,6 +480,32 @@ class MyApp(wx.App):
         xrc.XRCCTRL(self.util_panel, 'save_btn').Bind(wx.EVT_BUTTON, self.OnSave)
         xrc.XRCCTRL(self.util_panel, 'copy_btn').Bind(wx.EVT_BUTTON, self.OnCopy)
         self.frame.Bind(wx.EVT_CLOSE, self.OnClose)
+        xrc.XRCCTRL(self.load_panel, 'load_base_score_btn').Bind(wx.EVT_BUTTON, 
+                    functools.partial(self.OnStringLoad, 
+                                      xrc.XRCCTRL(self.load_panel, 'base_score_str'),
+                                      self.base_score))
+        xrc.XRCCTRL(self.load_panel, 'load_temp_score_btn').Bind(wx.EVT_BUTTON, 
+                    functools.partial(self.OnStringLoad, 
+                                      xrc.XRCCTRL(self.load_panel, 'temp_score_str'),
+                                      self.temp_score))
+        xrc.XRCCTRL(self.load_panel, 'load_env_score_btn').Bind(wx.EVT_BUTTON, 
+                    functools.partial(self.OnStringLoad, 
+                                      xrc.XRCCTRL(self.load_panel, 'env_score_str'),
+                                      self.env_score))
+        xrc.XRCCTRL(self.load_panel, 'load_all_scores_btn').Bind(wx.EVT_BUTTON, 
+                    self.OnStringLoadAll)
+        
+        
+    def OnStringLoad(self, textctrl, score, event=None):
+        score.from_string(textctrl.GetValue())
+        self.update_choices()
+        self.refresh_score()
+        
+    def OnStringLoadAll(self, event=None):
+        self.OnStringLoad(xrc.XRCCTRL(self.load_panel, 'base_score_str'), self.base_score, event)
+        self.OnStringLoad(xrc.XRCCTRL(self.load_panel, 'env_score_str'), self.env_score, event)
+        self.OnStringLoad(xrc.XRCCTRL(self.load_panel, 'temp_score_str'), self.temp_score, event)
+        
     
     def OnKey(self, event):
         """Called on KEY_EVENT
