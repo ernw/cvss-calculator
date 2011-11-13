@@ -1,0 +1,748 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<resource xmlns="http://www.wxwindows.org/wxxrc" version="2.3.0.1">
+	<object class="wxFrame" name="MyFrame">
+		<style>wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL</style>
+		<title></title>
+		<centered>1</centered>
+		<object class="wxFlexGridSizer">
+			<rows>2</rows>
+			<cols>1</cols>
+			<vgap>0</vgap>
+			<hgap>0</hgap>
+			<growablecols>0</growablecols>
+			<growablerows>0,1</growablerows>
+			<object class="sizeritem">
+				<option>1</option>
+				<flag>wxALL|wxEXPAND</flag>
+				<border>5</border>
+				<object class="wxPanel" name="score_panel">
+					<style>wxTAB_TRAVERSAL</style>
+					<object class="wxFlexGridSizer">
+						<rows>4</rows>
+						<cols>3</cols>
+						<vgap>0</vgap>
+						<hgap>0</hgap>
+						<growablecols>0</growablecols>
+						<growablerows></growablerows>
+						<object class="sizeritem">
+							<option>1</option>
+							<flag>wxALL</flag>
+							<border>5</border>
+							<object class="wxStaticText" name="m_staticText1">
+								<label>Base Score</label>
+								<wrap>-1</wrap>
+							</object>
+						</object>
+						<object class="sizeritem">
+							<option>0</option>
+							<flag>wxALL</flag>
+							<border>5</border>
+							<object class="wxGauge" name="base_gauge">
+								<style>wxGA_HORIZONTAL</style>
+								<range>100</range>
+								<value>0</value>
+							</object>
+						</object>
+						<object class="sizeritem">
+							<option>0</option>
+							<flag>wxALL</flag>
+							<border>5</border>
+							<object class="wxStaticText" name="base_score">
+								<label>0.00</label>
+								<wrap>-1</wrap>
+							</object>
+						</object>
+						<object class="sizeritem">
+							<option>0</option>
+							<flag>wxALL</flag>
+							<border>5</border>
+							<object class="wxStaticText" name="m_staticText2">
+								<label>Temporal Score</label>
+								<wrap>-1</wrap>
+							</object>
+						</object>
+						<object class="sizeritem">
+							<option>2</option>
+							<flag>wxALL</flag>
+							<border>5</border>
+							<object class="wxGauge" name="temp_gauge">
+								<style>wxGA_HORIZONTAL</style>
+								<range>100</range>
+								<value>0</value>
+							</object>
+						</object>
+						<object class="sizeritem">
+							<option>0</option>
+							<flag>wxALL</flag>
+							<border>5</border>
+							<object class="wxStaticText" name="temp_score">
+								<label>0.00</label>
+								<wrap>-1</wrap>
+							</object>
+						</object>
+						<object class="sizeritem">
+							<option>0</option>
+							<flag>wxALL</flag>
+							<border>5</border>
+							<object class="wxStaticText" name="m_staticText4">
+								<label>Environmental Score</label>
+								<wrap>-1</wrap>
+							</object>
+						</object>
+						<object class="sizeritem">
+							<option>2</option>
+							<flag>wxALL</flag>
+							<border>5</border>
+							<object class="wxGauge" name="env_gauge">
+								<style>wxGA_HORIZONTAL</style>
+								<range>100</range>
+								<value>0</value>
+							</object>
+						</object>
+						<object class="sizeritem">
+							<option>0</option>
+							<flag>wxALL</flag>
+							<border>5</border>
+							<object class="wxStaticText" name="env_score">
+								<label>0.00</label>
+								<wrap>-1</wrap>
+							</object>
+						</object>
+						<object class="sizeritem">
+							<option>0</option>
+							<flag>wxALL</flag>
+							<border>5</border>
+							<object class="wxStaticText" name="m_staticText101">
+								<label>Total Score</label>
+								<wrap>-1</wrap>
+							</object>
+						</object>
+						<object class="sizeritem">
+							<option>0</option>
+							<flag>wxALL</flag>
+							<border>5</border>
+							<object class="wxGauge" name="total_gauge">
+								<style>wxGA_HORIZONTAL</style>
+								<range>100</range>
+								<value>0</value>
+							</object>
+						</object>
+						<object class="sizeritem">
+							<option>0</option>
+							<flag>wxALL</flag>
+							<border>5</border>
+							<object class="wxStaticText" name="total_score">
+								<label>0.00</label>
+								<wrap>-1</wrap>
+							</object>
+						</object>
+					</object>
+				</object>
+			</object>
+			<object class="sizeritem">
+				<option>1</option>
+				<flag>wxEXPAND | wxALL</flag>
+				<border>5</border>
+				<object class="wxNotebook" name="m_notebook1">
+					<object class="notebookpage">
+						<label>CVSS 2</label>
+						<selected>0</selected>
+						<object class="wxPanel" name="cvss2_panel">
+							<style>wxTAB_TRAVERSAL</style>
+							<object class="wxFlexGridSizer">
+								<rows>2</rows>
+								<cols>2</cols>
+								<vgap>0</vgap>
+								<hgap>0</hgap>
+								<growablecols></growablecols>
+								<growablerows>0</growablerows>
+								<object class="sizeritem">
+									<option>1</option>
+									<flag>wxEXPAND | wxALL</flag>
+									<border>5</border>
+									<object class="wxPanel" name="base_panel">
+										<style>wxTAB_TRAVERSAL</style>
+										<object class="wxStaticBoxSizer">
+											<orient>wxVERTICAL</orient>
+											<label>Base Score</label>
+											<object class="sizeritem">
+												<option>1</option>
+												<flag>wxEXPAND</flag>
+												<border>5</border>
+												<object class="wxFlexGridSizer">
+													<rows>6</rows>
+													<cols>3</cols>
+													<vgap>0</vgap>
+													<hgap>0</hgap>
+													<growablecols>0</growablecols>
+													<growablerows></growablerows>
+													<object class="sizeritem">
+														<option>0</option>
+														<flag>wxALIGN_CENTER_VERTICAL|wxALL</flag>
+														<border>5</border>
+														<object class="wxStaticText" name="m_staticText8">
+															<label>Attack Vector</label>
+															<wrap>-1</wrap>
+														</object>
+													</object>
+													<object class="sizeritem">
+														<option>0</option>
+														<flag>wxALIGN_CENTER_VERTICAL|wxALL|wxEXPAND</flag>
+														<border>5</border>
+														<object class="wxChoice" name="av_choice">
+															<selection>0</selection>
+															<content />
+														</object>
+													</object>
+													<object class="sizeritem">
+														<option>0</option>
+														<flag>wxALIGN_CENTER_VERTICAL|wxALL</flag>
+														<border>5</border>
+														<object class="wxBitmapButton" name="av_help_btn">
+															<style>wxBU_AUTODRAW</style>
+															<bitmap />
+															<default>0</default>
+														</object>
+													</object>
+													<object class="sizeritem">
+														<option>0</option>
+														<flag>wxALIGN_CENTER_VERTICAL|wxALL</flag>
+														<border>5</border>
+														<object class="wxStaticText" name="m_staticText9">
+															<label>Attack Complexity</label>
+															<wrap>-1</wrap>
+														</object>
+													</object>
+													<object class="sizeritem">
+														<option>0</option>
+														<flag>wxALIGN_CENTER_VERTICAL|wxALL|wxEXPAND</flag>
+														<border>5</border>
+														<object class="wxChoice" name="ac_choice">
+															<selection>0</selection>
+															<content />
+														</object>
+													</object>
+													<object class="sizeritem">
+														<option>0</option>
+														<flag>wxALIGN_CENTER_VERTICAL|wxALL</flag>
+														<border>5</border>
+														<object class="wxBitmapButton" name="ac_help_btn">
+															<style>wxBU_AUTODRAW</style>
+															<bitmap />
+															<default>0</default>
+														</object>
+													</object>
+													<object class="sizeritem">
+														<option>0</option>
+														<flag>wxALIGN_CENTER_VERTICAL|wxALL</flag>
+														<border>5</border>
+														<object class="wxStaticText" name="m_staticText10">
+															<label>Authentication</label>
+															<wrap>-1</wrap>
+														</object>
+													</object>
+													<object class="sizeritem">
+														<option>0</option>
+														<flag>wxALIGN_CENTER_VERTICAL|wxALL|wxEXPAND</flag>
+														<border>5</border>
+														<object class="wxChoice" name="au_choice">
+															<selection>0</selection>
+															<content />
+														</object>
+													</object>
+													<object class="sizeritem">
+														<option>0</option>
+														<flag>wxALIGN_CENTER_VERTICAL|wxALL</flag>
+														<border>5</border>
+														<object class="wxBitmapButton" name="au_help_btn">
+															<style>wxBU_AUTODRAW</style>
+															<bitmap />
+															<default>0</default>
+														</object>
+													</object>
+													<object class="sizeritem">
+														<option>0</option>
+														<flag>wxALIGN_CENTER_VERTICAL|wxALL</flag>
+														<border>5</border>
+														<object class="wxStaticText" name="m_staticText14">
+															<label>Confidentiality Impact</label>
+															<wrap>-1</wrap>
+														</object>
+													</object>
+													<object class="sizeritem">
+														<option>0</option>
+														<flag>wxALIGN_CENTER_VERTICAL|wxALL|wxEXPAND</flag>
+														<border>5</border>
+														<object class="wxChoice" name="c_choice">
+															<selection>0</selection>
+															<content />
+														</object>
+													</object>
+													<object class="sizeritem">
+														<option>0</option>
+														<flag>wxALIGN_CENTER_VERTICAL|wxALL</flag>
+														<border>5</border>
+														<object class="wxBitmapButton" name="c_help_btn">
+															<style>wxBU_AUTODRAW</style>
+															<bitmap />
+															<default>0</default>
+														</object>
+													</object>
+													<object class="sizeritem">
+														<option>0</option>
+														<flag>wxALIGN_CENTER_VERTICAL|wxALL</flag>
+														<border>5</border>
+														<object class="wxStaticText" name="m_staticText15">
+															<label>Integrity Impact</label>
+															<wrap>-1</wrap>
+														</object>
+													</object>
+													<object class="sizeritem">
+														<option>0</option>
+														<flag>wxALIGN_CENTER_VERTICAL|wxALL|wxEXPAND</flag>
+														<border>5</border>
+														<object class="wxChoice" name="i_choice">
+															<selection>0</selection>
+															<content />
+														</object>
+													</object>
+													<object class="sizeritem">
+														<option>0</option>
+														<flag>wxALIGN_CENTER_VERTICAL|wxALL</flag>
+														<border>5</border>
+														<object class="wxBitmapButton" name="i_help_btn">
+															<style>wxBU_AUTODRAW</style>
+															<bitmap />
+															<default>0</default>
+														</object>
+													</object>
+													<object class="sizeritem">
+														<option>0</option>
+														<flag>wxALIGN_CENTER_VERTICAL|wxALL</flag>
+														<border>5</border>
+														<object class="wxStaticText" name="m_staticText16">
+															<label>Availability Impact</label>
+															<wrap>-1</wrap>
+														</object>
+													</object>
+													<object class="sizeritem">
+														<option>0</option>
+														<flag>wxALIGN_CENTER_VERTICAL|wxALL|wxEXPAND</flag>
+														<border>5</border>
+														<object class="wxChoice" name="a_choice">
+															<selection>0</selection>
+															<content />
+														</object>
+													</object>
+													<object class="sizeritem">
+														<option>0</option>
+														<flag>wxALIGN_CENTER_VERTICAL|wxALL</flag>
+														<border>5</border>
+														<object class="wxBitmapButton" name="a_help_btn">
+															<style>wxBU_AUTODRAW</style>
+															<bitmap />
+															<default>0</default>
+														</object>
+													</object>
+												</object>
+											</object>
+										</object>
+									</object>
+								</object>
+								<object class="sizeritem">
+									<option>1</option>
+									<flag>wxALL</flag>
+									<border>5</border>
+									<object class="wxPanel" name="env_panel">
+										<style>wxTAB_TRAVERSAL</style>
+										<object class="wxStaticBoxSizer">
+											<orient>wxVERTICAL</orient>
+											<label>Environmental Score</label>
+											<object class="sizeritem">
+												<option>1</option>
+												<flag>wxEXPAND</flag>
+												<border>5</border>
+												<object class="wxFlexGridSizer">
+													<rows>5</rows>
+													<cols>3</cols>
+													<vgap>0</vgap>
+													<hgap>0</hgap>
+													<growablecols>0</growablecols>
+													<growablerows></growablerows>
+													<object class="sizeritem">
+														<option>0</option>
+														<flag>wxALIGN_CENTER_VERTICAL|wxALL</flag>
+														<border>5</border>
+														<object class="wxStaticText" name="m_staticText17">
+															<label>Collateral Damage Potential</label>
+															<wrap>-1</wrap>
+														</object>
+													</object>
+													<object class="sizeritem">
+														<option>0</option>
+														<flag>wxALIGN_CENTER_VERTICAL|wxALL|wxEXPAND</flag>
+														<border>5</border>
+														<object class="wxChoice" name="cdp_choice">
+															<selection>0</selection>
+															<content />
+														</object>
+													</object>
+													<object class="sizeritem">
+														<option>0</option>
+														<flag>wxALIGN_CENTER_VERTICAL|wxALL</flag>
+														<border>5</border>
+														<object class="wxBitmapButton" name="cdp_help_btn">
+															<style>wxBU_AUTODRAW</style>
+															<bitmap />
+															<default>0</default>
+														</object>
+													</object>
+													<object class="sizeritem">
+														<option>0</option>
+														<flag>wxALIGN_CENTER_VERTICAL|wxALL</flag>
+														<border>5</border>
+														<object class="wxStaticText" name="m_staticText18">
+															<label>Target Distribution</label>
+															<wrap>-1</wrap>
+														</object>
+													</object>
+													<object class="sizeritem">
+														<option>0</option>
+														<flag>wxALIGN_CENTER_VERTICAL|wxALL|wxEXPAND</flag>
+														<border>5</border>
+														<object class="wxChoice" name="td_choice">
+															<selection>0</selection>
+															<content />
+														</object>
+													</object>
+													<object class="sizeritem">
+														<option>0</option>
+														<flag>wxALIGN_CENTER_VERTICAL|wxALL</flag>
+														<border>5</border>
+														<object class="wxBitmapButton" name="td_help_btn">
+															<style>wxBU_AUTODRAW</style>
+															<bitmap />
+															<default>0</default>
+														</object>
+													</object>
+													<object class="sizeritem">
+														<option>0</option>
+														<flag>wxALIGN_CENTER_VERTICAL|wxALL</flag>
+														<border>5</border>
+														<object class="wxStaticText" name="m_staticText19">
+															<label>Confidentiality Requirement</label>
+															<wrap>-1</wrap>
+														</object>
+													</object>
+													<object class="sizeritem">
+														<option>0</option>
+														<flag>wxALIGN_CENTER_VERTICAL|wxALL|wxEXPAND</flag>
+														<border>5</border>
+														<object class="wxChoice" name="cr_choice">
+															<selection>0</selection>
+															<content />
+														</object>
+													</object>
+													<object class="sizeritem">
+														<option>0</option>
+														<flag>wxALIGN_CENTER_VERTICAL|wxALL</flag>
+														<border>5</border>
+														<object class="wxBitmapButton" name="cr_help_btn">
+															<style>wxBU_AUTODRAW</style>
+															<bitmap />
+															<default>0</default>
+														</object>
+													</object>
+													<object class="sizeritem">
+														<option>0</option>
+														<flag>wxALIGN_CENTER_VERTICAL|wxALL</flag>
+														<border>5</border>
+														<object class="wxStaticText" name="m_staticText21">
+															<label>Integrity Requirement</label>
+															<wrap>-1</wrap>
+														</object>
+													</object>
+													<object class="sizeritem">
+														<option>0</option>
+														<flag>wxALIGN_CENTER_VERTICAL|wxALL|wxEXPAND</flag>
+														<border>5</border>
+														<object class="wxChoice" name="ir_choice">
+															<selection>0</selection>
+															<content />
+														</object>
+													</object>
+													<object class="sizeritem">
+														<option>0</option>
+														<flag>wxALIGN_CENTER_VERTICAL|wxALL</flag>
+														<border>5</border>
+														<object class="wxBitmapButton" name="ir_help_btn">
+															<style>wxBU_AUTODRAW</style>
+															<bitmap />
+															<default>0</default>
+														</object>
+													</object>
+													<object class="sizeritem">
+														<option>0</option>
+														<flag>wxALIGN_CENTER_VERTICAL|wxALL</flag>
+														<border>5</border>
+														<object class="wxStaticText" name="m_staticText20">
+															<label>Availbility Requirement</label>
+															<wrap>-1</wrap>
+														</object>
+													</object>
+													<object class="sizeritem">
+														<option>0</option>
+														<flag>wxALIGN_CENTER_VERTICAL|wxALL|wxEXPAND</flag>
+														<border>5</border>
+														<object class="wxChoice" name="ar_choice">
+															<selection>0</selection>
+															<content />
+														</object>
+													</object>
+													<object class="sizeritem">
+														<option>0</option>
+														<flag>wxALIGN_CENTER_VERTICAL|wxALL</flag>
+														<border>5</border>
+														<object class="wxBitmapButton" name="ar_help_btn">
+															<style>wxBU_AUTODRAW</style>
+															<bitmap />
+															<default>0</default>
+														</object>
+													</object>
+												</object>
+											</object>
+										</object>
+									</object>
+								</object>
+								<object class="sizeritem">
+									<option>1</option>
+									<flag>wxALL|wxEXPAND</flag>
+									<border>5</border>
+									<object class="wxPanel" name="temp_panel">
+										<style>wxTAB_TRAVERSAL</style>
+										<object class="wxStaticBoxSizer">
+											<orient>wxVERTICAL</orient>
+											<label>Temporal Score</label>
+											<object class="sizeritem">
+												<option>1</option>
+												<flag>wxEXPAND</flag>
+												<border>5</border>
+												<object class="wxFlexGridSizer">
+													<rows>3</rows>
+													<cols>3</cols>
+													<vgap>0</vgap>
+													<hgap>0</hgap>
+													<growablecols>0</growablecols>
+													<growablerows></growablerows>
+													<object class="sizeritem">
+														<option>0</option>
+														<flag>wxALIGN_CENTER_VERTICAL|wxALL</flag>
+														<border>5</border>
+														<object class="wxStaticText" name="m_staticText22">
+															<label>Exploitability</label>
+															<wrap>-1</wrap>
+														</object>
+													</object>
+													<object class="sizeritem">
+														<option>0</option>
+														<flag>wxALIGN_CENTER_VERTICAL|wxALL|wxEXPAND</flag>
+														<border>5</border>
+														<object class="wxChoice" name="e_choice">
+															<selection>0</selection>
+															<content />
+														</object>
+													</object>
+													<object class="sizeritem">
+														<option>0</option>
+														<flag>wxALIGN_CENTER_VERTICAL|wxALL</flag>
+														<border>5</border>
+														<object class="wxBitmapButton" name="e_help_btn">
+															<style>wxBU_AUTODRAW</style>
+															<bitmap />
+															<default>0</default>
+														</object>
+													</object>
+													<object class="sizeritem">
+														<option>0</option>
+														<flag>wxALIGN_CENTER_VERTICAL|wxALL</flag>
+														<border>5</border>
+														<object class="wxStaticText" name="m_staticText23">
+															<label>Remedation Level</label>
+															<wrap>-1</wrap>
+														</object>
+													</object>
+													<object class="sizeritem">
+														<option>0</option>
+														<flag>wxALIGN_CENTER_VERTICAL|wxALL|wxEXPAND</flag>
+														<border>5</border>
+														<object class="wxChoice" name="rl_choice">
+															<selection>0</selection>
+															<content />
+														</object>
+													</object>
+													<object class="sizeritem">
+														<option>0</option>
+														<flag>wxALIGN_CENTER_VERTICAL|wxALL</flag>
+														<border>5</border>
+														<object class="wxBitmapButton" name="rl_choice_btn">
+															<style>wxBU_AUTODRAW</style>
+															<bitmap />
+															<default>0</default>
+														</object>
+													</object>
+													<object class="sizeritem">
+														<option>0</option>
+														<flag>wxALIGN_CENTER_VERTICAL|wxALL</flag>
+														<border>5</border>
+														<object class="wxStaticText" name="m_staticText24">
+															<label>Report Confidence</label>
+															<wrap>-1</wrap>
+														</object>
+													</object>
+													<object class="sizeritem">
+														<option>0</option>
+														<flag>wxALIGN_CENTER_VERTICAL|wxALL|wxEXPAND</flag>
+														<border>5</border>
+														<object class="wxChoice" name="rc_choice">
+															<selection>0</selection>
+															<content />
+														</object>
+													</object>
+													<object class="sizeritem">
+														<option>0</option>
+														<flag>wxALIGN_CENTER_VERTICAL|wxALL</flag>
+														<border>5</border>
+														<object class="wxBitmapButton" name="rc_help_btn">
+															<style>wxBU_AUTODRAW</style>
+															<bitmap />
+															<default>0</default>
+														</object>
+													</object>
+												</object>
+											</object>
+										</object>
+									</object>
+								</object>
+								<object class="sizeritem">
+									<option>1</option>
+									<flag>wxEXPAND | wxALL</flag>
+									<border>5</border>
+									<object class="wxPanel" name="util_panel">
+										<style>wxTAB_TRAVERSAL</style>
+										<object class="wxFlexGridSizer">
+											<rows>2</rows>
+											<cols>3</cols>
+											<vgap>0</vgap>
+											<hgap>0</hgap>
+											<growablecols></growablecols>
+											<growablerows></growablerows>
+											<object class="sizeritem">
+												<option>0</option>
+												<flag>wxALIGN_CENTER_VERTICAL|wxALL</flag>
+												<border>5</border>
+												<object class="wxStaticText" name="m_staticText12">
+													<label>Author</label>
+													<wrap>-1</wrap>
+												</object>
+											</object>
+											<object class="sizeritem">
+												<option>0</option>
+												<flag>wxALIGN_CENTER_VERTICAL|wxALL</flag>
+												<border>5</border>
+												<object class="wxTextCtrl" name="author_ctrl">
+													<value></value>
+													<maxlength>0</maxlength>
+												</object>
+											</object>
+											<object class="sizeritem">
+												<option>0</option>
+												<flag>wxALL</flag>
+												<border>5</border>
+												<object class="wxStaticText" name="m_staticText25">
+													<label></label>
+													<wrap>-1</wrap>
+												</object>
+											</object>
+											<object class="sizeritem">
+												<option>0</option>
+												<flag>wxALIGN_CENTER_VERTICAL|wxALL</flag>
+												<border>5</border>
+												<object class="wxStaticText" name="Date">
+													<label>Date</label>
+													<wrap>-1</wrap>
+												</object>
+											</object>
+											<object class="sizeritem">
+												<option>0</option>
+												<flag>wxALIGN_CENTER_VERTICAL|wxALL</flag>
+												<border>5</border>
+												<object class="wxDatePickerCtrl" name="date_ctrl">
+													<style>wxDP_DEFAULT</style>
+												</object>
+											</object>
+											<object class="sizeritem">
+												<option>0</option>
+												<flag>wxALL</flag>
+												<border>5</border>
+												<object class="TimeCtrl" name="time_ctrl" />
+											</object>
+											<object class="sizeritem">
+												<option>0</option>
+												<flag>wxALIGN_CENTER_VERTICAL|wxALL</flag>
+												<border>5</border>
+												<object class="wxButton" name="load_btn">
+													<label>Load</label>
+													<default>0</default>
+												</object>
+											</object>
+											<object class="sizeritem">
+												<option>0</option>
+												<flag>wxALIGN_CENTER_VERTICAL|wxALL</flag>
+												<border>5</border>
+												<object class="wxButton" name="save_btn">
+													<label>Save</label>
+													<default>0</default>
+												</object>
+											</object>
+											<object class="sizeritem">
+												<option>0</option>
+												<flag>wxALL</flag>
+												<border>5</border>
+												<object class="wxStaticText" name="m_staticText26">
+													<label></label>
+													<wrap>-1</wrap>
+												</object>
+											</object>
+											<object class="sizeritem">
+												<option>0</option>
+												<flag>wxALIGN_CENTER_VERTICAL|wxALL</flag>
+												<border>5</border>
+												<object class="wxChoice" name="copy_choice">
+													<selection>0</selection>
+													<content>
+														<item>Word</item>
+														<item>Text</item>
+														<item>Latex</item>
+													</content>
+												</object>
+											</object>
+											<object class="sizeritem">
+												<option>0</option>
+												<flag>wxALIGN_CENTER_VERTICAL|wxALL</flag>
+												<border>5</border>
+												<object class="wxButton" name="copy_btn">
+													<label>Copy</label>
+													<default>0</default>
+												</object>
+											</object>
+										</object>
+									</object>
+								</object>
+							</object>
+						</object>
+					</object>
+				</object>
+			</object>
+		</object>
+	</object>
+</resource>
