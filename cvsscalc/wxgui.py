@@ -340,13 +340,12 @@ class MyApp(wx.App):
         self.refresh_score()
         
         
-        ib = wx.IconBundle()
         icon_content = find_file('cvsscalc/cvsscalc.ico', mode='rb')
-        tmpfile = tempfile.NamedTemporaryFile()
-        tmpfile.write(icon_content)
-        tmpfile.flush()
-        ib.AddIconFromFile(tmpfile.name, wx.BITMAP_TYPE_ANY)
-        tmpfile.close()
+        tmpfile = tempfile.mkstemp()
+        os.write(tmpfile[0], icon_content)
+        os.close(tmpfile[0])
+        self.frame.SetIcon(wx.Icon(tmpfile[1], wx.BITMAP_TYPE_ANY))
+        os.unlink(tmpfile[1])
 
         # resize and show
         self.frame.Fit()
