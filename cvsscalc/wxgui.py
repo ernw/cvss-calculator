@@ -86,7 +86,7 @@ def find_file(path, mode='r'):
     Returns the full path name if found, None if not found"""
     for dirname in sys.path:
         if os.path.isfile(dirname):
-            zf = zipfile.ZipFile(dirname, mode=mode)
+            zf = zipfile.ZipFile(dirname, mode='r')
             if path in zf.namelist():
                 data = zf.read(path)
                 zf.close()
