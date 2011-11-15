@@ -16,7 +16,7 @@ import wx
 import re
 from wx import xrc
 
-from cvsscalc import cvsscalc
+from cvsscalc import cvsscalc, strings
 from wx.lib.masked import TimeCtrl
 
 try:
@@ -803,30 +803,30 @@ class MyApp(wx.App):
         """
         # get copy type
         target = xrc.XRCCTRL(self.util_panel, 'copy_choice').GetSelection()
-        
+        _ = strings.Strings.instance()
         # collect data
-        header = 'The severity rating based on CVSS Version 2:'
+        header = _['The severity rating based on CVSS Version 2'] + ':'
         score = self.get_total_score()
         if score < 4:
             tex_color = 'green'
             word_color = 4
-            severity = 'Low'
+            severity = _['Low']
         elif score >= 7:
             tex_color = 'red'
             word_color = 6
-            severity = 'High'
+            severity = _['High']
         else:
             tex_color = 'yellow'
             word_color = 7
-            severity = 'Medium'
+            severity = _['Medium']
             
         table_data = [
-                      ('Reference File:', self.fname),
-                      ('Base Vector:', str(self.base_score)),
-                      ('Temporal Vector:', str(self.temp_score)),
-                      ('Environmental Vector:', str(self.env_score)),
-                      ('CVSS Version 2 Score:', '%.1f' % score),
-                      ('Severity:', severity)
+                      (_['Reference File'] + ':', self.fname),
+                      (_['Base Vector'] + ':', str(self.base_score)),
+                      (_['Temporal Vector'] + ':', str(self.temp_score)),
+                      (_['Environmental Vector'] + ':', str(self.env_score)),
+                      (_['CVSS Version 2 Score'] +':', '%.1f' % score),
+                      (_['Severity'] + ':', severity)
                       ]
         
         
