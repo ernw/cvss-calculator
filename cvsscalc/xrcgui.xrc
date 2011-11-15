@@ -752,7 +752,7 @@
 								<vgap>0</vgap>
 								<hgap>0</hgap>
 								<growablecols>1</growablecols>
-								<growablerows></growablerows>
+								<growablerows>4</growablerows>
 								<object class="sizeritem">
 									<option>0</option>
 									<flag>wxALL</flag>
@@ -885,6 +885,34 @@
 									<border>5</border>
 									<object class="wxButton" name="load_all_scores_btn">
 										<label>Load all</label>
+										<default>0</default>
+									</object>
+								</object>
+								<object class="sizeritem">
+									<option>0</option>
+									<flag>wxALL</flag>
+									<border>5</border>
+									<object class="wxStaticText" name="m_staticText32">
+										<label>Complete Block</label>
+										<wrap>-1</wrap>
+									</object>
+								</object>
+								<object class="sizeritem">
+									<option>0</option>
+									<flag>wxALL|wxEXPAND</flag>
+									<border>5</border>
+									<object class="wxTextCtrl" name="cvss_block_ctrl">
+										<style>wxTE_MULTILINE</style>
+										<value></value>
+										<maxlength>0</maxlength>
+									</object>
+								</object>
+								<object class="sizeritem">
+									<option>0</option>
+									<flag>wxALL</flag>
+									<border>5</border>
+									<object class="wxButton" name="load_block_btn">
+										<label>Parse and \nLoad Block</label>
 										<default>0</default>
 									</object>
 								</object>

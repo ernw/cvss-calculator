@@ -12,6 +12,7 @@ import zipfile
 import functools
 import tempfile
 import wx
+import re
 from wx import xrc
 
 from cvsscalc import cvsscalc
@@ -503,6 +504,8 @@ class MyApp(wx.App):
                                       self.env_score))
         xrc.XRCCTRL(self.load_panel, 'load_all_scores_btn').Bind(wx.EVT_BUTTON, 
                     self.OnStringLoadAll)
+        xrc.XRCCTRL(self.load_panel, 'load_block_btn').Bind(wx.EVT_BUTTON, 
+                    self.OnStringLoadBlock)
         
         
     def OnStringLoad(self, textctrl, score, event=None):
@@ -515,6 +518,23 @@ class MyApp(wx.App):
         self.OnStringLoad(xrc.XRCCTRL(self.load_panel, 'env_score_str'), self.env_score, event)
         self.OnStringLoad(xrc.XRCCTRL(self.load_panel, 'temp_score_str'), self.temp_score, event)
         
+    def OnStringLoadBlock(self, tevent=None):
+        block_text = xrc.XRCCTRL(self.load_panel, 'cvss_block_ctrl').GetValue()
+        regex = re.compile(r'\(((([a-zA-Z]+:[a-zA-Z]+|-) / )+([a-zA-Z]+:[a-zA-Z]+|-))\)')
+        
+        for line in block_text.split('\n'):
+            line = line.strip()
+            
+            m = regex.search(line)
+            if m:
+                if len(m.group(1).split('/')) == 6:
+                    self.base_score.from_string(m.group(1))
+                elif len(m.group(1).split('/')) == 3:
+                    self.temp_score.from_string(m.group(1))
+                elif len(m.group(1).split('/')) == 5:
+                    self.env_score.from_string(m.group(1))
+        self.update_choices()
+        self.refresh_score()
     
     def OnKey(self, event):
         """Called on KEY_EVENT
