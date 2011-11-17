@@ -654,7 +654,8 @@ class MyApp(wx.App):
         # save filename
         self.fname = os.path.basename(fp.name)
         # change cwd
-        os.chdir(os.path.dirname(fp.name))
+        if os.path.dirname(fp.name):
+            os.chdir(os.path.dirname(fp.name))
 
         # update mod flag and title
         self.modified = False
