@@ -3,7 +3,7 @@ Created on Oct 21, 2011
 
 @author: bluec0re
 '''
-from __future__ import absolute_import
+from __future__ import absolute_import, division
 
 
 import os.path
@@ -323,7 +323,7 @@ class MyApp(wx.App):
         
         # receive windows
         self.frame = self.res.LoadFrame(None, 'MyFrame')
-        self.frame.SetTitle('CVSS Calculator')
+        self.set_title('CVSS Calculator')
         self.base_panel = xrc.XRCCTRL(self.frame, 'base_panel')
         self.env_panel = xrc.XRCCTRL(self.frame, 'env_panel')
         self.temp_panel = xrc.XRCCTRL(self.frame, 'temp_panel')
@@ -597,9 +597,9 @@ class MyApp(wx.App):
 
         # update title
         if self.frame.GetTitle().endswith(']'):
-            self.frame.SetTitle(self.frame.GetTitle()[:-1] + '*]')
+            self.set_title(self.frame.GetTitle()[:-1] + '*]')
         else:
-            self.frame.SetTitle(self.frame.GetTitle() + '[<never saved before>*]')
+            self.set_title(self.frame.GetTitle() + '[<never saved before>*]')
         
     def OnLoad(self, event=None):
         """Called on Load btn or CTRL+o
@@ -659,7 +659,7 @@ class MyApp(wx.App):
 
         # update mod flag and title
         self.modified = False
-        self.frame.SetTitle('CVSS Calculator [%s]' % fp.name)
+        self.set_title('CVSS Calculator [{0}]', fp.name)
             
     
     def OnSave(self, event=None, save_old=False):
@@ -672,7 +672,10 @@ class MyApp(wx.App):
         """
         if not save_old or not self.fname:
             # open file select dialog
-            fd = wx.FileDialog(self.frame, wildcard='*.cvss', style=wx.FD_SAVE|wx.FD_OVERWRITE_PROMPT)
+            cur_dir = os.getcwd()
+            fd = wx.FileDialog(self.frame, wildcard='*.cvss',
+                    style=wx.FD_SAVE|wx.FD_OVERWRITE_PROMPT,
+                    defaultDir=cur_dir, defaultFile=self.fname)
             fd.ShowModal()
             fname = fd.GetPath()
         else:
@@ -724,7 +727,7 @@ class MyApp(wx.App):
             os.chdir(os.path.dirname(fname))
             # update mod flag and title
             self.modified = False
-            self.frame.SetTitle('CVSS Calculator [%s]' % fp.name)
+            self.set_title('CVSS Calculator [{0}]', fp.name)
                 
     
     def OnCopy(self, event=None):
@@ -879,6 +882,23 @@ class MyApp(wx.App):
             wx.MessageBox(txt)
 
         btn.Bind(wx.EVT_BUTTON, functools.partial(onclick, txt))
+
+    def set_title(self, new_title, path=None):
+        if path:
+            if len(path) > 100:
+                segments = path.split(os.sep)
+                while len(os.path.join(segments)) > 96:
+                    del segments[len(segments) // 2]
+
+                path = segments[:len(segments) // 2]
+                path.append('...')
+                path += segments[len(segments) // 2:]
+                print path
+                path = os.path.join(*path)
+            new_title = new_title.format(path)
+
+        self.frame.SetTitle(new_title)
+
 
 def main(infile=None):
     """main function
