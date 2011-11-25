@@ -521,6 +521,7 @@ class MyApp(wx.App):
     def OnStringLoadBlock(self, tevent=None):
         block_text = xrc.XRCCTRL(self.load_panel, 'cvss_block_ctrl').GetValue()
         regex = re.compile(r'\(((([a-zA-Z]+:[a-zA-Z]+|-) / )+([a-zA-Z]+:[a-zA-Z]+|-))\)')
+        file_regex = re.compile(r'^.+\s(.+\.cvss)$')
         
         for line in block_text.split('\n'):
             line = line.strip()
@@ -533,6 +534,11 @@ class MyApp(wx.App):
                     self.temp_score.from_string(m.group(1))
                 elif len(m.group(1).split('/')) == 5:
                     self.env_score.from_string(m.group(1))
+            m = file_regex.search(line)
+            if m:
+                self.fname = m.group(1)
+                self.set_title('CVSS Calculator [{0}*]', os.path.abspath(self.fname))
+
         self.update_choices()
         self.refresh_score()
     
