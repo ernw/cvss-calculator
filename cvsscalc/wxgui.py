@@ -885,16 +885,14 @@ class MyApp(wx.App):
 
     def set_title(self, new_title, path=None):
         if path:
-            if len(path) > 100:
+            if len(path) > 75:
                 segments = path.split(os.sep)
-                while len(os.path.join(segments)) > 96:
+                while len(path) > 75:
                     del segments[len(segments) // 2]
-
-                path = segments[:len(segments) // 2]
-                path.append('...')
-                path += segments[len(segments) // 2:]
-                print path
-                path = os.path.join(*path)
+                    path = segments[:len(segments) // 2]
+                    path.append('...')
+                    path += segments[len(segments) // 2:]
+                    path = os.path.join(*path)
             new_title = new_title.format(path)
 
         self.frame.SetTitle(new_title)
