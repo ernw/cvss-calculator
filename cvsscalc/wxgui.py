@@ -5,9 +5,10 @@ Created on Oct 21, 2011
 '''
 from __future__ import absolute_import, division
 
-
+import os
 import os.path
 import sys
+import platform
 import zipfile
 import functools
 import tempfile
@@ -773,13 +774,13 @@ class MyApp(wx.App):
         
         
         if target == 0: # Word
-            string = '%s\n' % header
-            string += '%s\t\t\t%s\n' % table_data[0]
-            string += '%s\t\t\t(%s)\n' % table_data[1]
-            string += '%s\t\t(%s)\n' % table_data[2]
-            string += '%s\t\t(%s)\n' % table_data[3]
-            string += '%s\t\t%s\n' % table_data[4]
-            string += '%s\t\t\t%s\n' % table_data[5]
+            string =   header + os.linesep
+            string += ('%s\t\t\t%s'+os.linesep) % table_data[0]
+            string += ('%s\t\t\t(%s)'+os.linesep) % table_data[1]
+            string += ('%s\t\t(%s)'+os.linesep) % table_data[2]
+            string += ('%s\t\t(%s)'+os.linesep) % table_data[3]
+            string += ('%s\t\t%s'+os.linesep) % table_data[4]
+            string += ('%s\t\t\t%s'+os.linesep) % table_data[5]
             
             
             do = wx.TextDataObject()
@@ -792,24 +793,25 @@ class MyApp(wx.App):
             wx.TheClipboard.Close()
             return
         elif target == 2: # LaTeX
-            string = '%s\n' % header
-            string += '\\begin{tabular}{@{}ll}\n'
+            string = header+os.linesep 
+            string += '\\begin{tabular}{@{}ll}'+os.linesep 
             for data in table_data:
                 if table_data.index(data) == 5:
-                    string += '  %s & \\colorbox{%s}{%s}\n' % (data[0], tex_color, data[1])
+                    string += ('  %s & \\colorbox{%s}{%s}'+os.linesep) % (data[0],
+                            tex_color, data[1], )
                 elif table_data.index(data) in (1, 2, 3):
-                    string += '  %s & (%s)\n' % data
+                    string += ('  %s & (%s)'+os.linesep) % data
                 else:
-                    string += '  %s & %s\n' % data
-            string += '\\end{tabular}\n'
+                    string += ('  %s & %s'+os.linesep) % data
+            string += '\\end{tabular}'+os.linesep 
         elif target == 1: # Text
-            string = '%s\n' % header
-            string += '%s       %s\n' % table_data[0]
-            string += '%s          (%s)\n' % table_data[1]
-            string += '%s      (%s)\n' % table_data[2]
-            string += '%s (%s)\n' % table_data[3]
-            string += '%s %s\n' % table_data[4]
-            string += '%s             %s\n' % table_data[5]
+            string = header + os.linesep
+            string += ('%s       %s'+os.linesep) % table_data[0]
+            string += ('%s          (%s)'+os.linesep) % table_data[1]
+            string += ('%s      (%s)'+os.linesep) % table_data[2]
+            string += ('%s (%s)'+os.linesep) % table_data[3]
+            string += ('%s %s'+os.linesep) % table_data[4]
+            string += ('%s             %s'+os.linesep) % table_data[5]
         
         # insert into clipboard
         if not wx.TheClipboard.IsOpened():
@@ -875,7 +877,8 @@ class MyApp(wx.App):
             txt += "\n"
         
         txt = txt.strip()
-        choice.SetToolTipString(txt)
+        if platform.system() != 'Darwin':
+            choice.SetToolTipString(txt)
 
         def onclick(txt, event):
             """Onclick handler for help btn
