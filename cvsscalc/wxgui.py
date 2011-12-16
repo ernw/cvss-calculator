@@ -680,9 +680,14 @@ class MyApp(wx.App):
         if not save_old or not self.fname:
             # open file select dialog
             cur_dir = os.getcwd()
-            fd = wx.FileDialog(self.frame, wildcard='*.cvss',
+            if self.fname:
+                fd = wx.FileDialog(self.frame, wildcard='*.cvss',
                     style=wx.FD_SAVE|wx.FD_OVERWRITE_PROMPT,
                     defaultDir=cur_dir, defaultFile=self.fname)
+            else:
+                fd = wx.FileDialog(self.frame, wildcard='*.cvss',
+                    style=wx.FD_SAVE|wx.FD_OVERWRITE_PROMPT,
+                    defaultDir=cur_dir)
             fd.ShowModal()
             fname = fd.GetPath()
         else:
