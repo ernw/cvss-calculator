@@ -561,6 +561,19 @@ class MyApp(wx.App):
             # CTRL+o => open
             elif event.GetKeyCode() == ord('o') or event.GetKeyCode() == ord('O'):
                 self.OnLoad()
+            # CTRL+SHIIFT+v => parse
+            elif event.ShiftDown() and (event.GetKeyCode() == ord('v') or
+                    event.GetKeyCode() == ord('V')):
+                if wx.TheClipboard.IsOpened() or wx.TheClipboard.Open():
+                    td = wx.TextDataObject()
+                    success = wx.TheClipboard.GetData(td)
+                    wx.TheClipboard.Close()
+                    if success:
+                        text = td.GetText()
+                        if text: 
+                            xrc.XRCCTRL(self.load_panel,
+                                'cvss_block_ctrl').SetValue(text)
+                            self.OnStringLoadBlock()
             # execute next handler
             else:
                 event.Skip()
