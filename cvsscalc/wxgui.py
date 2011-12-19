@@ -629,7 +629,9 @@ class MyApp(wx.App):
         
         """
         # show file select dialog
-        fd = wx.FileDialog(self.frame, wildcard='*.cvss', style=wx.FD_OPEN|wx.FD_FILE_MUST_EXIST)
+        cur_dir = os.getcwd()
+        fd = wx.FileDialog(self.frame, wildcard='*.cvss', 
+                style=wx.FD_OPEN|wx.FD_FILE_MUST_EXIST, defaultDir=cur_dir)
         fd.ShowModal()
         
         fname = fd.GetPath()
@@ -724,7 +726,7 @@ class MyApp(wx.App):
         date.AddTS(time)
         
         # write to file
-        with open(fname, 'w') as fp:
+        with open(fname, 'wb') as fp:
             # cvss 1
             fp.write('- / - / - / - / - / - / -\r\n')
             fp.write('- / - / -\r\n')
@@ -738,14 +740,14 @@ class MyApp(wx.App):
             fp.write(name + '\r\n') # auditor
             # score
             score = self.get_total_score()
-            fp.write('%.1f\n' % score)
+            fp.write('%.1f\r\n' % score)
             # severity
             if score < 4:
-                fp.write('Low\n')
+                fp.write('Low\r\n')
             elif score >= 7:
-                fp.write('High\n')
+                fp.write('High\r\n')
             else:
-                fp.write('Medium\n')
+                fp.write('Medium\r\n')
             # remember filename
             self.fname = os.path.basename(fname)
             # change cwd
