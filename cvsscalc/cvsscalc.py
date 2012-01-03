@@ -65,7 +65,7 @@ class Score:
 class Base(Score):
     AV = {
         'L' : 0.395,
-        'AN': 0.646,
+        'A' : 0.646,
         'N' : 1.0
         }
     AC = {
@@ -109,6 +109,23 @@ class Base(Score):
         """
         return 'AV:%s / AC:%s / Au:%s / C:%s / I:%s / A:%s' % (self.AV,
                 self.AC, self.Au, self.C, self.I, self.A)
+
+    def from_string(self, string):
+        cls_vars = get_user_attributes(self.__class__)
+        if not string:
+            for var, val in cls_vars:
+                self.__dict__[var] = None
+        else: 
+            data = dict([d.strip().split(':') for d in string.strip(' ()').split('/')])
+            if data['AV'] == 'AN':
+                data['AV'] = 'A'
+            for var, val in cls_vars:
+                if var in data:
+                    self.__dict__[var] = data[var]
+                else:
+                    self.__dict__[var] = None
+
+
                     
 class Temporal(Score):
     E = {

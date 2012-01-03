@@ -1,5 +1,5 @@
 #!/bin/sh
-
+cd "$(dirname "$0")"
 zip cvsscalc.zip __main__.py cvsscalc/*.py tooltips/*/* cvsscalc/cvsscalc.ico cvsscalc/*.xrc
 
 echo '#!/usr/bin/env python2' > cvsscalc.zippy

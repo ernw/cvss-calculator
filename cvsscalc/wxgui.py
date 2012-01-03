@@ -83,6 +83,23 @@ except ImportError:
             """
             pass
 
+def _copy2clipboard(string):
+    do = wx.TextDataObject()
+    do.SetText(string)
+
+    if not wx.TheClipboard.IsOpened():
+        wx.TheClipboard.Open()
+
+    wx.TheClipboard.SetData(do)
+    wx.TheClipboard.Flush()
+    wx.TheClipboard.Close()
+
+def copy2clipboard(string):
+    wx.TheClipboard.UsePrimarySelection(True)
+    _copy2clipboard(string)
+    wx.TheClipboard.UsePrimarySelection(False)
+    _copy2clipboard(string)
+
 def find_file(path, mode='r'):
     """Find the file named path in the sys.path.
     Returns the full path name if found, None if not found"""
@@ -210,7 +227,7 @@ class MyApp(wx.App):
     base = {
             'av' : (
                   ('Local', 'L'),
-                  ('Adjacent Network', 'AN'),
+                  ('Adjacent Network', 'A'),
                   ('Network', 'N')
                   ),
             'ac' : (
@@ -801,16 +818,8 @@ class MyApp(wx.App):
             string += ('%s\t\t(%s)'+os.linesep) % table_data[3]
             string += ('%s\t\t%s'+os.linesep) % table_data[4]
             string += ('%s\t\t\t%s'+os.linesep) % table_data[5]
+            copy2clipboard(string)    
             
-            
-            do = wx.TextDataObject()
-            do.SetText(string)
-            
-            if not wx.TheClipboard.IsOpened():
-                wx.TheClipboard.Open()
-        
-            wx.TheClipboard.SetData(do)
-            wx.TheClipboard.Close()
             return
         elif target == 2: # LaTeX
             string = header+os.linesep 
@@ -834,14 +843,7 @@ class MyApp(wx.App):
             string += ('%s             %s'+os.linesep) % table_data[5]
         
         # insert into clipboard
-        if not wx.TheClipboard.IsOpened():
-            wx.TheClipboard.Open()
-            
-        do = wx.TextDataObject()
-        do.SetText(string)
-        wx.TheClipboard.SetData(do)
-        wx.TheClipboard.Close()
-        
+        copy2clipboard(string)    
     
     def update_choices(self):
         """Update all choice controls
