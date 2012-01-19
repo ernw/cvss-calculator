@@ -683,7 +683,11 @@ class MyApp(wx.App):
 
         # parse date
         date = wx.DateTime()
-        date.ParseFormat(format='%m/%d/%Y %H:%M:%S', date=lines[7].strip())
+        if date.ParseFormat(format='%m/%d/%Y %H:%M:%S', 
+                            date=lines[7].strip()):
+            # german dateformat? == 0
+            date.ParseFormat(format='%d.%m.%Y %H:%M:%S', 
+                            date=lines[7].strip())
        
         # set values
         xrc.XRCCTRL(self.util_panel, 'date_ctrl').SetValue(date)

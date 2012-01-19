@@ -159,10 +159,10 @@ class Temporal(Score):
         if isinstance(base, Base):
             base = base.get_score()
         
-        return (base * 
+        return round(base * 
                 Temporal.E[self.E] * 
                 Temporal.RL[self.RL] * 
-                Temporal.RC[self.RC])
+                Temporal.RC[self.RC], 1)
         
     def __str__(self):
         """

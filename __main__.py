@@ -2,6 +2,8 @@
 
 import argparse
 from cvsscalc import wxgui, cvsscalc
+import logging
+
 
 if __name__ == '__main__':
 
@@ -20,4 +22,9 @@ if __name__ == '__main__':
     if args.console:
         cvsscalc.main(args.INFILE)
     elif args.gui == 'wx':
-        wxgui.main(args.INFILE)
+        try:
+            wxgui.main(args.INFILE)
+        except:
+            logging.basicConfig(level=logging.DEBUG, filename='cvsscalc.log')
+            logging.exception('Autsch')
+            
