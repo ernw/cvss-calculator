@@ -12,7 +12,8 @@ def get_user_attributes(cls):
     """
     boring = dir(type('dummy', (object,), {}))
     return [item
-            for item in inspect.getmembers(cls, lambda x: not inspect.ismethod(x))
+            for item in inspect.getmembers(cls, 
+                                           lambda x: not inspect.ismethod(x))
             if item[0] not in boring]
 
 class Score:
@@ -34,11 +35,12 @@ class Score:
         """
         cls_vars = get_user_attributes(self.__class__)
         if not string:
-            for var, val in cls_vars:
+            for var, _ in cls_vars:
                 self.__dict__[var] = None
         else: 
-            data = dict([d.strip().split(':') for d in string.strip(' ()').split('/')])
-            for var, val in cls_vars:
+            data = dict([d.strip().split(':') for d in string.strip(' ()')
+                         .split('/')])
+            for var, _ in cls_vars:
                 if var in data:
                     self.__dict__[var] = data[var]
                 else:
@@ -54,7 +56,7 @@ class Score:
         cls_vars = get_user_attributes(self.__class__)
         
         tmp = []
-        for name, val in cls_vars:
+        for name, _ in cls_vars:
             if self.__dict__[name]:
                 tmp.append('%s:%s' % (name, self.__dict__[name]))
             else:
@@ -113,13 +115,14 @@ class Base(Score):
     def from_string(self, string):
         cls_vars = get_user_attributes(self.__class__)
         if not string:
-            for var, val in cls_vars:
+            for var, _ in cls_vars:
                 self.__dict__[var] = None
         else: 
-            data = dict([d.strip().split(':') for d in string.strip(' ()').split('/')])
+            data = dict([d.strip().split(':') for d in string.strip(' ()')
+                         .split('/')])
             if data['AV'] == 'AN':
                 data['AV'] = 'A'
-            for var, val in cls_vars:
+            for var, _ in cls_vars:
                 if var in data:
                     self.__dict__[var] = data[var]
                 else:
@@ -214,7 +217,8 @@ class Environmental(Score):
                         Base.Au[base.Au]))
         f_impact = adj_impact and 1.176
         
-        adj_base = round(((0.6 * adj_impact) + (0.4 * exploit) - 1.5) * f_impact, 1)
+        adj_base = round(((0.6 * adj_impact) + (0.4 * exploit) - 1.5) * 
+                         f_impact, 1)
         
         tmp_score = temp.get_score(adj_base)
         
@@ -251,7 +255,7 @@ class Cvss2:
         return self.env.get_score(self.base, self.tmp)
 
 
-def main(fp, out=sys.stdout):
+def main(filep, out=sys.stdout, crlf=False):
     """
     
     Keyword arguments:
@@ -259,9 +263,8 @@ def main(fp, out=sys.stdout):
     out -- (Default: sys.stdout)
     
     """
-    import os.path
-    lines = fp.readlines()
-    fp.close()
+    lines = filep.readlines()
+    filep.close()
     
     cvss = Cvss2()
     cvss.base = Base(lines[3])
@@ -269,23 +272,25 @@ def main(fp, out=sys.stdout):
     cvss.env = Environmental(lines[5])
     
     score = cvss.get_score()
+
+    eol = "\r\n" if crlf else "\n"
     out.writelines(lines[:3])
-    out.write(str(cvss.base) + "\n")
-    out.write(str(cvss.tmp) + "\n")
-    out.write(str(cvss.env) + "\n")
+    out.write(str(cvss.base) + eol)
+    out.write(str(cvss.tmp) + eol)
+    out.write(str(cvss.env) + eol)
     out.writelines(lines[6:9])
-    out.write(str(score) + "\n")
+    out.write(str(score) + eol)
     if score < 4.0:
-        out.write('Low\n')
+        out.write('Low' + eol)
     elif score >= 7:
-        out.write('High\n')
+        out.write('High' + eol)
     else:
-        out.write('Medium\n')
+        out.write('Medium' + eol)
 
 if __name__ == '__main__':
-    fp = open(sys.argv[1])
+    __FP = open(sys.argv[1])
 
-    main(fp)
+    main(__FP)
 
 # vim: set ts=4 sw=4 tw=79 :
 

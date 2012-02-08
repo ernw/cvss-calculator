@@ -395,7 +395,8 @@ class MyApp(wx.App):
                 choice_name,_ = child.GetName().split('_')
                 
                 # get data for choice
-                items = MyApp.__dict__[panel_name.encode()][choice_name.encode()]
+                items = MyApp.__dict__[panel_name.encode()][
+                                       choice_name.encode()]
                 # insert strings
                 for item in items:
                     child.Append(item[0])
@@ -431,7 +432,8 @@ class MyApp(wx.App):
                 choice_name,_ = child.GetName().split('_')
                 
                 # get data of choice
-                items = MyApp.__dict__[panel_name.encode()][choice_name.encode()]
+                items = MyApp.__dict__[panel_name.encode()][
+                                        choice_name.encode()]
                 
                 # get corresponding score object
                 score = getattr(self, '%s_score' % panel_name)
@@ -478,7 +480,8 @@ class MyApp(wx.App):
                 choice_name,_ = child.GetName().split('_')
                 
                 # get data of choice
-                items = MyApp.__dict__[panel_name.encode()][choice_name.encode()]
+                items = MyApp.__dict__[panel_name.encode()][
+                                       choice_name.encode()]
                 
                 # get corresponding score object
                 score = getattr(self, '%s_score' % panel_name)
@@ -504,21 +507,27 @@ class MyApp(wx.App):
         """Binds all keys
         """
         self.Bind(wx.EVT_KEY_DOWN, self.OnKey)
-        xrc.XRCCTRL(self.util_panel, 'load_btn').Bind(wx.EVT_BUTTON, self.OnLoad)
-        xrc.XRCCTRL(self.util_panel, 'save_btn').Bind(wx.EVT_BUTTON, self.OnSave)
-        xrc.XRCCTRL(self.util_panel, 'copy_btn').Bind(wx.EVT_BUTTON, self.OnCopy)
+        xrc.XRCCTRL(self.util_panel, 'load_btn').Bind(wx.EVT_BUTTON, 
+                                                      self.OnLoad)
+        xrc.XRCCTRL(self.util_panel, 'save_btn').Bind(wx.EVT_BUTTON,
+                                                      self.OnSave)
+        xrc.XRCCTRL(self.util_panel, 'copy_btn').Bind(wx.EVT_BUTTON,
+                                                      self.OnCopy)
         self.frame.Bind(wx.EVT_CLOSE, self.OnClose)
-        xrc.XRCCTRL(self.load_panel, 'load_base_score_btn').Bind(wx.EVT_BUTTON, 
+        xrc.XRCCTRL(self.load_panel, 'load_base_score_btn').Bind(wx.EVT_BUTTON,
                     functools.partial(self.OnStringLoad, 
-                                      xrc.XRCCTRL(self.load_panel, 'base_score_str'),
+                                      xrc.XRCCTRL(self.load_panel, 
+                                                  'base_score_str'),
                                       self.base_score))
         xrc.XRCCTRL(self.load_panel, 'load_temp_score_btn').Bind(wx.EVT_BUTTON, 
                     functools.partial(self.OnStringLoad, 
-                                      xrc.XRCCTRL(self.load_panel, 'temp_score_str'),
+                                      xrc.XRCCTRL(self.load_panel,
+                                                  'temp_score_str'),
                                       self.temp_score))
         xrc.XRCCTRL(self.load_panel, 'load_env_score_btn').Bind(wx.EVT_BUTTON, 
                     functools.partial(self.OnStringLoad, 
-                                      xrc.XRCCTRL(self.load_panel, 'env_score_str'),
+                                      xrc.XRCCTRL(self.load_panel,
+                                                  'env_score_str'),
                                       self.env_score))
         xrc.XRCCTRL(self.load_panel, 'load_all_scores_btn').Bind(wx.EVT_BUTTON, 
                     self.OnStringLoadAll)
@@ -532,13 +541,18 @@ class MyApp(wx.App):
         self.refresh_score()
         
     def OnStringLoadAll(self, event=None):
-        self.OnStringLoad(xrc.XRCCTRL(self.load_panel, 'base_score_str'), self.base_score, event)
-        self.OnStringLoad(xrc.XRCCTRL(self.load_panel, 'env_score_str'), self.env_score, event)
-        self.OnStringLoad(xrc.XRCCTRL(self.load_panel, 'temp_score_str'), self.temp_score, event)
+        self.OnStringLoad(xrc.XRCCTRL(self.load_panel, 'base_score_str'),
+                          self.base_score, event)
+        self.OnStringLoad(xrc.XRCCTRL(self.load_panel, 'env_score_str'),
+                          self.env_score, event)
+        self.OnStringLoad(xrc.XRCCTRL(self.load_panel, 'temp_score_str'),
+                          self.temp_score, event)
         
     def OnStringLoadBlock(self, tevent=None):
-        block_text = xrc.XRCCTRL(self.load_panel, 'cvss_block_ctrl').GetValue()
-        regex = re.compile(r'\(((([a-zA-Z]+:[a-zA-Z]+|-) / )+([a-zA-Z]+:[a-zA-Z]+|-))\)')
+        block_text = xrc.XRCCTRL(self.load_panel, 
+                                 'cvss_block_ctrl').GetValue()
+        regex = re.compile(
+                r'\(((([a-zA-Z]+:[a-zA-Z]+|-) / )+([a-zA-Z]+:[a-zA-Z]+|-))\)')
         file_regex = re.compile(r'^.+\s(.+\.cvss)$')
         
         for line in block_text.split('\n'):
@@ -555,7 +569,8 @@ class MyApp(wx.App):
             m = file_regex.search(line)
             if m:
                 self.fname = m.group(1)
-                self.set_title('CVSS Calculator [{0}*]', os.path.abspath(self.fname))
+                self.set_title('CVSS Calculator [{0}*]',
+                               os.path.abspath(self.fname))
 
         self.update_choices()
         self.refresh_score()
@@ -740,7 +755,8 @@ class MyApp(wx.App):
         # get values
         name = xrc.XRCCTRL(self.util_panel, 'author_ctrl').GetValue()
         date = xrc.XRCCTRL(self.util_panel, 'date_ctrl').GetValue()
-        time = xrc.XRCCTRL(self.util_panel, 'time_ctrl').GetValue(as_wxTimeSpan=True)
+        time = xrc.XRCCTRL(self.util_panel, 'time_ctrl').GetValue(
+                                                        as_wxTimeSpan=True)
         date.SetHour(0)
         date.SetMinute(0)
         date.SetSecond(0)
@@ -864,13 +880,13 @@ class MyApp(wx.App):
         tmp = self.temp_score
         env = self.env_score
         # update panel controls
-        xrc.XRCCTRL(self.score_panel, 'base_score').SetLabel('%.2f' % base.get_score())
+        xrc.XRCCTRL(self.score_panel, 'base_score').SetLabel('%.1f' % base.get_score())
         xrc.XRCCTRL(self.score_panel, 'base_gauge').SetValue(base.get_score() * 10)
-        xrc.XRCCTRL(self.score_panel, 'temp_score').SetLabel('%.2f' % tmp.get_score(base))
+        xrc.XRCCTRL(self.score_panel, 'temp_score').SetLabel('%.1f' % tmp.get_score(base))
         xrc.XRCCTRL(self.score_panel, 'temp_gauge').SetValue(tmp.get_score(base) * 10)
-        xrc.XRCCTRL(self.score_panel, 'env_score').SetLabel('%.2f' % env.get_score(base, tmp))
+        xrc.XRCCTRL(self.score_panel, 'env_score').SetLabel('%.1f' % env.get_score(base, tmp))
         xrc.XRCCTRL(self.score_panel, 'env_gauge').SetValue(env.get_score(base, tmp) * 10)
-        xrc.XRCCTRL(self.score_panel, 'total_score').SetLabel('%.2f' % env.get_score(base, tmp))
+        xrc.XRCCTRL(self.score_panel, 'total_score').SetLabel('%.1f' % env.get_score(base, tmp))
         xrc.XRCCTRL(self.score_panel, 'total_gauge').SetValue(env.get_score(base, tmp) * 10)
         
     def get_total_score(self):
