@@ -834,7 +834,7 @@ class MyApp(wx.App):
             string =   header + os.linesep
             string += ('%s\t\t\t%s'+os.linesep) % table_data[0]
             string += ('%s\t\t\t(%s)'+os.linesep) % table_data[1]
-            string += ('%s\t\t(%s)'+os.linesep) % table_data[2]
+            string += ('%s\t\t\t(%s)'+os.linesep) % table_data[2]
             string += ('%s\t\t(%s)'+os.linesep) % table_data[3]
             string += ('%s\t\t%s'+os.linesep) % table_data[4]
             string += ('%s\t\t\t%s'+os.linesep) % table_data[5]
