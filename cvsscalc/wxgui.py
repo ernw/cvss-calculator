@@ -918,7 +918,7 @@ class MyApp(wx.App):
             txt += content
             txt += "\n"
         
-        txt = txt.strip()
+        txt = txt.strip().decode('UTF-8')
         if platform.system() != 'Darwin':
             choice.SetToolTipString(txt)
 
