@@ -837,7 +837,7 @@ class MyApp(wx.App):
             string += ('%s\t\t\t(%s)'+os.linesep) % table_data[2]
             string += ('%s\t\t(%s)'+os.linesep) % table_data[3]
             string += ('%s\t\t%s'+os.linesep) % table_data[4]
-            string += ('%s\t\t\t%s'+os.linesep) % table_data[5]
+            string += ('%s\t\t\t\t%s'+os.linesep) % table_data[5]
             copy2clipboard(string)    
             
             return
