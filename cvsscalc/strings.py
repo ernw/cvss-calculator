@@ -1,37 +1,23 @@
 # -*- coding: utf-8 -*-
-# vim: set fileencoding=utf-8 set ts=4 sw=4 tw=79 : 
+# vim: fileencoding=utf-8 ts=4 sw=4 tw=79 : 
 '''
 Created on Nov 15, 2011
 
 @author: bluec0re
 '''
 
-class Strings(object):
-    cur_instance = None
-    
+
+class Singleton(object):
     @classmethod
     def instance(cls):
-        if not cls.cur_instance:
-            cls.cur_instance = Strings()
+        if not hasattr(cls,'cur_instance') or not cls.cur_instance:
+            cls.cur_instance = cls()
         return cls.cur_instance
     
-    def __init__(self):
-        self.en = dict()
-        self.de = {
-                   'The severity rating based on CVSS Version 2' : 'Die Kritikalitätsbewertung nach CVSS Version 2 ergibt sich wie folgt',
-                   'Reference File' : 'Referenz Datei',
-                   'Base Vector' : 'Basis Wert',
-                   'Temporal Vector' : 'Temporärer Wert',
-                   'Environmental Vector' : 'Umgebungs Wert',
-                   'CVSS Version 2 Score' : 'CVSS Version 2 Wert',
-                   'Severity' : 'Kritikalität',
-                   'Low' : 'Niedrig',
-                   'Medium' : 'Mittel',
-                   'High' : 'Hoch' 
-                   }
-        self.set_lang(self.de)
-        
+
+class I18N(Singleton):
     def set_lang(self, lang):
+        lang = getattr(self, lang)
         self.lang = lang
         
     def __getattr__(self, item):
@@ -39,3 +25,45 @@ class Strings(object):
         
     def __getitem__(self, item):
         return self.lang.get(item, item)
+
+
+class Strings(I18N):
+    def __init__(self):
+        self.en = dict()
+        self.de = {
+                   'The severity rating based on CVSS Version 2' : u'Die Kritikalitätsbewertung nach CVSS Version 2 ergibt sich wie folgt',
+                   'Reference File' : u'Referenz Datei',
+                   'Base Vector' : u'Base Vector',
+                   'Temporal Vector' : u'Temporal Vector',
+                   'Environmental Vector' : u'Environmental Vector',
+                   'CVSS Version 2 Score' : u'CVSS Version 2 Score',
+                   'Severity' : u'Kritikalität',
+                   'Low' : u'Niedrig',
+                   'Medium' : u'Mittel',
+                   'High' : u'Hoch' 
+                   }
+        self.set_lang('en')
+        
+class Format(I18N):
+    def __init__(self):
+        self.en = {
+                'word' :{
+                    'refFile' : '%s\t\t\t%s',
+                    'base' : '%s\t\t\t(%s)',
+                    'temp' : '%s\t\t\t(%s)',
+                    'env' : '%s\t\t(%s)',
+                    'score' : '%s\t\t%s',
+                    'severity' : '%s\t\t\t\t%s'
+                    }
+                }
+        self.de = {
+                'word' :{
+                    'refFile' : '%s\t\t\t%s',
+                    'base' : '%s\t\t\t(%s)',
+                    'temp' : '%s\t\t\t(%s)',
+                    'env' : '%s\t\t(%s)',
+                    'score' : '%s\t\t%s',
+                    'severity' : '%s\t\t\t%s'
+                    }
+                }
+        self.set_lang('en')

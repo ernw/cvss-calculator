@@ -14,6 +14,7 @@ import functools
 import tempfile
 import wx
 import re
+import math
 from wx import xrc
 
 from cvsscalc import cvsscalc, strings
@@ -803,7 +804,13 @@ class MyApp(wx.App):
         """
         # get copy type
         target = xrc.XRCCTRL(self.util_panel, 'copy_choice').GetSelection()
+        lang = xrc.XRCCTRL(self.util_panel, 'language').GetSelection()
+        lang = ['en', 'de'][lang]
         _ = strings.Strings.instance()
+        _.set_lang(lang)
+        fmt = strings.Format.instance()
+        fmt.set_lang(lang)
+        #_.set_lang(_.en)
         # collect data
         header = _['The severity rating based on CVSS Version 2'] + ':'
         score = self.get_total_score()
@@ -829,16 +836,22 @@ class MyApp(wx.App):
                       (_['Severity'] + ':', severity)
                       ]
         
+        max = 0
+        for name,_ in table_data:
+            if len(name) > max:
+                max = len(name)
+        max += 1
+        print max
         
         if target == 0: # Word
-            string =   header + os.linesep
-            string += ('%s\t\t\t%s'+os.linesep) % table_data[0]
-            string += ('%s\t\t\t(%s)'+os.linesep) % table_data[1]
-            string += ('%s\t\t(%s)'+os.linesep) % table_data[2]
-            string += ('%s\t\t(%s)'+os.linesep) % table_data[3]
-            string += ('%s\t\t%s'+os.linesep) % table_data[4]
-            string += ('%s\t\t\t%s'+os.linesep) % table_data[5]
-            copy2clipboard(string)    
+            string   = header + os.linesep
+            string += (fmt['word']['refFile']+os.linesep) % table_data[0]
+            string += (fmt['word']['base']+os.linesep) % table_data[1]
+            string += (fmt['word']['temp']+os.linesep) % table_data[2]
+            string += (fmt['word']['env']+os.linesep) % table_data[3]
+            string += (fmt['word']['score']+os.linesep) % table_data[4]
+            string += (fmt['word']['severity']+os.linesep) % table_data[5]
+            copy2clipboard(string)
             
             return
         elif target == 2: # LaTeX
@@ -855,12 +868,14 @@ class MyApp(wx.App):
             string += '\\end{tabular}'+os.linesep 
         elif target == 1: # Text
             string = header + os.linesep
-            string += ('%s       %s'+os.linesep) % table_data[0]
-            string += ('%s          (%s)'+os.linesep) % table_data[1]
-            string += ('%s      (%s)'+os.linesep) % table_data[2]
-            string += ('%s (%s)'+os.linesep) % table_data[3]
-            string += ('%s %s'+os.linesep) % table_data[4]
-            string += ('%s             %s'+os.linesep) % table_data[5]
+            fmt1 = u'%%-%ds%%s%s' % (max,os.linesep)
+            fmt2 = u'%%-%ds(%%s)%s' % (max,os.linesep)
+            string += fmt1 % table_data[0]
+            string += fmt2 % table_data[1]
+            string += fmt2 % table_data[2]
+            string += fmt2 % table_data[3]
+            string += fmt1 % table_data[4]
+            string += fmt1 % table_data[5]
         
         # insert into clipboard
         copy2clipboard(string)    
