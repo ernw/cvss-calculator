@@ -31,13 +31,13 @@ class Strings(I18N):
     def __init__(self):
         self.en = dict()
         self.de = {
-                   'The severity rating based on CVSS Version 2' : u'Die Kritikalitätsbewertung nach CVSS Version 2 ergibt sich wie folgt',
+                   'The severity rating based on CVSS Version 2' : u'Die Bewertung nach CVSS Version 2 ergibt sich wie folgt',
                    'Reference File' : u'Referenz Datei',
                    'Base Vector' : u'Base Vector',
                    'Temporal Vector' : u'Temporal Vector',
                    'Environmental Vector' : u'Environmental Vector',
                    'CVSS Version 2 Score' : u'CVSS Version 2 Score',
-                   'Severity' : u'Kritikalität',
+                   'Severity' : u'Schwere',
                    'Low' : u'Niedrig',
                    'Medium' : u'Mittel',
                    'High' : u'Hoch' 
@@ -63,7 +63,7 @@ class Format(I18N):
                     'temp' : '%s\t\t\t(%s)',
                     'env' : '%s\t\t(%s)',
                     'score' : '%s\t\t%s',
-                    'severity' : '%s\t\t\t%s'
+                    'severity' : '%s\t\t\t\t%s'
                     }
                 }
         self.set_lang('en')
