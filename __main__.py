@@ -1,12 +1,23 @@
 #!/usr/bin/env python2
 
-import argparse
 from cvsscalc import wxgui, cvsscalc
 import logging
+import sys
+
+try:
+    import argparse
+except ImportError:
+    argparse = None
+
+def wx(infile):
+   try:
+       wxgui.main(infile)
+   except:
+       logging.basicConfig(level=logging.DEBUG, filename='cvsscalc.log')
+       logging.exception('Autsch')
 
 
-if __name__ == '__main__':
-
+def main():
     parser = argparse.ArgumentParser(
                 description='Calculates the CVSS 2 Score')
     main_group = parser.add_mutually_exclusive_group()
@@ -26,9 +37,10 @@ if __name__ == '__main__':
     if args.console:
         cvsscalc.main(args.INFILE, cr=args.cr)
     elif args.gui == 'wx':
-        try:
-            wxgui.main(args.INFILE)
-        except:
-            logging.basicConfig(level=logging.DEBUG, filename='cvsscalc.log')
-            logging.exception('Autsch')
-            
+        wx(args.INFILE)
+
+if __name__ == '__main__':
+    if argparse:
+        main()
+    else:
+        wx(sys.argv[1] if len(sys.argv) > 1 else None)
