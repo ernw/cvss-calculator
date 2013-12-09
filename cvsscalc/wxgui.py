@@ -841,7 +841,6 @@ class MyApp(wx.App):
             if len(name) > max:
                 max = len(name)
         max += 1
-        print max
         
         if target == 0: # Word
             string   = header + os.linesep
