@@ -387,7 +387,7 @@ class MyApp(wx.App):
         pic = wx.ArtProvider.GetBitmap(wx.ART_QUESTION)
         # get panel name, eg. base of base_panel
         panel_name,_ = panel.GetName().split('_')
-        for child in panel.GetChildren():
+        for child in panel.GetChildren()[0].GetChildren():
             # choice control found
             if isinstance(child, wx.Choice):
                 choice = child # save current choice for tooltip
@@ -426,7 +426,7 @@ class MyApp(wx.App):
         """
         # get panel name, eg. base of base_panel
         panel_name,_ = panel.GetName().split('_')
-        for child in panel.GetChildren():
+        for child in panel.GetChildren()[0].GetChildren():
             # choice control found
             if isinstance(child, wx.Choice):
                 # get choice name, eg. av of av_choice
@@ -474,7 +474,7 @@ class MyApp(wx.App):
         
         # get panel name, eg. base of base_panel
         panel_name,_ = panel.GetName().split('_')
-        for child in panel.GetChildren():
+        for child in panel.GetChildren()[0].GetChildren():
             # choice control found
             if isinstance(child, wx.Choice):
                 # get choice name, eg. av of av_choice

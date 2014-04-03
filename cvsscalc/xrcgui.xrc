@@ -630,7 +630,7 @@
 									<object class="wxPanel" name="util_panel">
 										<style>wxTAB_TRAVERSAL</style>
 										<object class="wxFlexGridSizer">
-											<rows>2</rows>
+											<rows>4</rows>
 											<cols>3</cols>
 											<vgap>0</vgap>
 											<hgap>0</hgap>
@@ -759,7 +759,7 @@
 						<object class="wxPanel" name="load_panel">
 							<style>wxTAB_TRAVERSAL</style>
 							<object class="wxFlexGridSizer">
-								<rows>4</rows>
+								<rows>5</rows>
 								<cols>3</cols>
 								<vgap>0</vgap>
 								<hgap>0</hgap>
@@ -915,8 +915,8 @@
 									<border>5</border>
 									<object class="wxTextCtrl" name="cvss_block_ctrl">
 										<style>wxTE_MULTILINE</style>
-										<value></value>
-										<maxlength>0</maxlength>
+                                                                                <!--<value></value>
+                                                                                <maxlength>0</maxlength>-->
 									</object>
 								</object>
 								<object class="sizeritem">

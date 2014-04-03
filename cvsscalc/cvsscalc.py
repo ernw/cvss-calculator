@@ -92,13 +92,16 @@ class Base(Score):
         Keyword arguments:
         
         """
-        impact = 10.41 * (1 - 
-                (1 - Base.C[self.C]) * 
-                (1 - Base.I[self.I]) * 
-                (1 - Base.A[self.A]))
-        exploit = 20 * (Base.AV[self.AV] * 
-                        Base.AC[self.AC] * 
-                        Base.Au[self.Au])
+        try:
+            impact = 10.41 * (1 - 
+                    (1 - Base.C[self.C]) * 
+                    (1 - Base.I[self.I]) * 
+                    (1 - Base.A[self.A]))
+            exploit = 20 * (Base.AV[self.AV] * 
+                            Base.AC[self.AC] * 
+                            Base.Au[self.Au])
+        except KeyError:
+            return 0
         f_impact = impact and 1.176
         
         return round(((0.6 * impact) + (0.4 * exploit) - 1.5) * f_impact, 1) 
@@ -162,10 +165,13 @@ class Temporal(Score):
         if isinstance(base, Base):
             base = base.get_score()
         
-        return round(base * 
-                Temporal.E[self.E] * 
-                Temporal.RL[self.RL] * 
-                Temporal.RC[self.RC], 1)
+        try:
+            return round(base * 
+                    Temporal.E[self.E] * 
+                    Temporal.RL[self.RL] * 
+                    Temporal.RC[self.RC], 1)
+        except KeyError:
+            return 0
         
     def __str__(self):
         """
@@ -207,23 +213,26 @@ class Environmental(Score):
         temp -- 
         
         """
-        adj_impact = min(10,
-            10.41 * (1 - 
-                (1 - Base.C[base.C] * Environmental.CR[self.CR]) * 
-                (1 - Base.I[base.I] * Environmental.IR[self.IR]) * 
-                (1 - Base.A[base.A] * Environmental.AR[self.AR])))
-        exploit = (20 * (Base.AV[base.AV] * 
-                        Base.AC[base.AC] * 
-                        Base.Au[base.Au]))
-        f_impact = adj_impact and 1.176
-        
-        adj_base = round(((0.6 * adj_impact) + (0.4 * exploit) - 1.5) * 
-                         f_impact, 1)
-        
-        tmp_score = temp.get_score(adj_base)
-        
-        return round((tmp_score + (10 - tmp_score) * 
-            Environmental.CDP[self.CDP]) * Environmental.TD[self.TD], 1)
+        try:
+            adj_impact = min(10,
+                10.41 * (1 - 
+                    (1 - Base.C[base.C] * Environmental.CR[self.CR]) * 
+                    (1 - Base.I[base.I] * Environmental.IR[self.IR]) * 
+                    (1 - Base.A[base.A] * Environmental.AR[self.AR])))
+            exploit = (20 * (Base.AV[base.AV] * 
+                            Base.AC[base.AC] * 
+                            Base.Au[base.Au]))
+            f_impact = adj_impact and 1.176
+            
+            adj_base = round(((0.6 * adj_impact) + (0.4 * exploit) - 1.5) * 
+                             f_impact, 1)
+            
+            tmp_score = temp.get_score(adj_base)
+            
+            return round((tmp_score + (10 - tmp_score) * 
+                Environmental.CDP[self.CDP]) * Environmental.TD[self.TD], 1)
+        except KeyError:
+            return 0
                 
     def __str__(self):
         """
