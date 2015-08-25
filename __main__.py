@@ -35,7 +35,7 @@ def main():
     args = parser.parse_args()
 
     if args.console:
-        cvsscalc.main(args.INFILE, cr=args.cr)
+        cvsscalc.main(args.INFILE, crlf=args.cr)
     elif args.gui == 'wx':
         wx(args.INFILE)
 
