@@ -3,3 +3,8 @@
 *.zip*
 *old
 *.tmp
+*.orig
+/build
+/dist
+*.egg-info
+*.log
