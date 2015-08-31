@@ -1,0 +1,4 @@
+include cvsscalc/*.xrc
+include cvsscalc/*.ico
+include cvsscalc/*.png
+recursive-include cvsscalc/tooltips *

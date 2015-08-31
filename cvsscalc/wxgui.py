@@ -927,7 +927,7 @@ class MyApp(wx.App):
         for title, key in data:
             key = key.lower()
 
-            content = find_file('tooltips/%s/%s_%s.txt' % (panel, name, key))
+            content = find_file('cvsscalc/tooltips/%s/%s_%s.txt' % (panel, name, key))
             txt += "%s:\n" % title
             txt += content
             txt += "\n"
