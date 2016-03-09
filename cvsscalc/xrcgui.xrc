@@ -708,8 +708,8 @@
 												<option>0</option>
 												<flag>wxALL</flag>
 												<border>5</border>
-												<object class="wxStaticText" name="m_staticText26">
-													<label></label>
+												<object class="wxCheckBox" name="add_subscores">
+													<label>Add Subscores</label>
 													<wrap>-1</wrap>
 												</object>
 											</object>

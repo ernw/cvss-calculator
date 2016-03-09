@@ -841,12 +841,16 @@ class MyApp(wx.App):
             if len(name) > max:
                 max = len(name)
         max += 1
-        
+        add_subscores = xrc.XRCCTRL(self.util_panel, 'add_subscores').GetValue()
         if target == 0: # Word
             string   = header + os.linesep
             string += (fmt['word']['refFile']+os.linesep) % table_data[0]
             string += (fmt['word']['base']+os.linesep) % table_data[1]
+            if add_subscores:
+                string += (fmt['word']['base_score']+os.linesep) % self.base_score.get_score()
             string += (fmt['word']['temp']+os.linesep) % table_data[2]
+            if add_subscores:
+                string += (fmt['word']['temp_score']+os.linesep) % self.temp_score.get_score(self.base_score)
             string += (fmt['word']['env']+os.linesep) % table_data[3]
             string += (fmt['word']['score']+os.linesep) % table_data[4]
             string += (fmt['word']['severity']+os.linesep) % table_data[5]
