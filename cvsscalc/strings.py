@@ -32,12 +32,12 @@ class Strings(I18N):
         self.en = dict()
         self.de = {
                    'The severity rating based on CVSS Version 2' : u'Die Bewertung nach CVSS Version 2 ergibt sich wie folgt',
-                   'Reference File' : u'Referenz Datei',
+                   'Reference File' : u'Referenzdatei',
                    'Base Vector' : u'Base Vector',
                    'Temporal Vector' : u'Temporal Vector',
                    'Environmental Vector' : u'Environmental Vector',
                    'CVSS Version 2 Score' : u'CVSS Version 2 Score',
-                   'Severity' : u'Schwere',
+                   'Severity' : u'Relevanz',
                    'Low' : u'Niedrig',
                    'Medium' : u'Mittel',
                    'High' : u'Hoch' 
