@@ -62,7 +62,9 @@ class Format(I18N):
                 'word' :{
                     'refFile' : '%s\t\t\t%s',
                     'base' : '%s\t\t\t(%s)',
+                    'base_score' : 'Base Score:\t\t\t%s',
                     'temp' : '%s\t\t\t(%s)',
+                    'temp_score' : 'Temp Score\t\t\t%s',
                     'env' : '%s\t\t(%s)',
                     'score' : '%s\t\t%s',
                     'severity' : '%s\t\t\t\t%s'
