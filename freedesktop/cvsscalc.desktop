@@ -2,7 +2,7 @@
 [Desktop Entry]
 Type=Application
 Name=CVSS Calculator
-Exec=/home/bluec0re/bin/cvsscalc %f
+Exec=/usr/bin/cvss-calculator %f
 MimeType=application/cvss;
 Icon=application-cvss
 X-Desktop-File-Install-Version=0.22
